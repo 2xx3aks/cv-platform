@@ -1,0 +1,673 @@
+{% extends 'base.html' %}
+{% load i18n %}
+{% load static %}
+
+{% block title %}{% trans "Student Dashboard" %} - {% trans "CV Platform" %}{% endblock %}
+
+{% block extra_css %}
+<style>
+    .dashboard-stats {
+        display: grid;
+        grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+        gap: 1.5rem;
+        margin-bottom: 2rem;
+    }
+    
+    .stat-box {
+        background: linear-gradient(135deg, #ffffff 0%, #f0f7ff 100%);
+        border-radius: 16px;
+        padding: 1.5rem;
+        box-shadow: var(--shadow-md);
+        text-align: center;
+        transition: var(--transition);
+        border: 2px solid transparent;
+        position: relative;
+        overflow: hidden;
+    }
+    
+    .stat-box::before {
+        content: '';
+        position: absolute;
+        top: 0;
+        left: 0;
+        right: 0;
+        height: 4px;
+        background: var(--primary-gradient);
+        transform: scaleX(0);
+        transition: transform 0.3s ease;
+    }
+    
+    .stat-box:hover {
+        transform: translateY(-4px);
+        box-shadow: var(--shadow-lg);
+        border-color: var(--primary-color);
+    }
+    
+    .stat-box:hover::before {
+        transform: scaleX(1);
+    }
+    
+    .stat-box .stat-icon {
+        font-size: 2.5rem;
+        margin-bottom: 0.5rem;
+        background: var(--primary-gradient);
+        -webkit-background-clip: text;
+        -webkit-text-fill-color: transparent;
+        background-clip: text;
+        display: block;
+    }
+    
+    .stat-box .stat-value {
+        font-size: 2.2rem;
+        font-weight: 700;
+        background: var(--primary-gradient);
+        -webkit-background-clip: text;
+        -webkit-text-fill-color: transparent;
+        background-clip: text;
+        margin: 0.5rem 0;
+    }
+    
+    .stat-box .stat-label {
+        color: #6c757d;
+        font-size: 0.9rem;
+        font-weight: 500;
+        text-transform: uppercase;
+        letter-spacing: 0.5px;
+    }
+    
+    .profile-section {
+        background: linear-gradient(135deg, #ffffff 0%, #f8faff 100%);
+        border-radius: 16px;
+        padding: 2rem;
+        margin-bottom: 1.5rem;
+        box-shadow: var(--shadow-md);
+        transition: var(--transition);
+        border-left: 4px solid transparent;
+    }
+    
+    .profile-section:hover {
+        box-shadow: var(--shadow-lg);
+        border-left-color: var(--primary-color);
+        transform: translateX(4px);
+    }
+    
+    .profile-section h5 {
+        color: #1e40af;
+        font-weight: 600;
+        margin-bottom: 1.5rem;
+        display: flex;
+        align-items: center;
+        gap: 0.5rem;
+        font-size: 1.25rem;
+        padding-bottom: 0.75rem;
+        border-bottom: 2px solid #e5e7eb;
+    }
+    
+    .profile-section h5 i {
+        color: var(--primary-color);
+        font-size: 1.4rem;
+    }
+    
+    .info-grid {
+        display: grid;
+        grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+        gap: 1.5rem;
+        margin-top: 2rem;
+    }
+    
+    .quick-actions {
+        display: flex;
+        flex-direction: column;
+        gap: 1rem;
+    }
+    
+    .action-card {
+        background: linear-gradient(135deg, #ffffff 0%, #f8faff 100%);
+        border-radius: 14px;
+        padding: 1.5rem;
+        text-align: left;
+        box-shadow: var(--shadow-sm);
+        transition: var(--transition);
+        border: 2px solid #e0e7ff;
+        text-decoration: none;
+        color: inherit;
+        display: flex;
+        align-items: center;
+        gap: 1rem;
+        position: relative;
+        overflow: hidden;
+    }
+    
+    .action-card::before {
+        content: '';
+        position: absolute;
+        top: 0;
+        left: 0;
+        width: 4px;
+        height: 100%;
+        background: var(--primary-gradient);
+        transform: scaleY(0);
+        transition: transform 0.3s ease;
+    }
+    
+    .action-card:hover {
+        transform: translateX(8px);
+        box-shadow: var(--shadow-md);
+        border-color: var(--primary-color);
+        text-decoration: none;
+        color: inherit;
+        background: linear-gradient(135deg, #ffffff 0%, #eff6ff 100%);
+    }
+    
+    .action-card:hover::before {
+        transform: scaleY(1);
+    }
+    
+    .action-card .action-icon-wrapper {
+        width: 60px;
+        height: 60px;
+        border-radius: 12px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        flex-shrink: 0;
+        transition: var(--transition);
+    }
+    
+    .action-card.edit .action-icon-wrapper {
+        background: linear-gradient(135deg, #fbbf24 0%, #f59e0b 100%);
+    }
+    
+    .action-card.view .action-icon-wrapper {
+        background: linear-gradient(135deg, #3b82f6 0%, #2563eb 100%);
+    }
+    
+    .action-card.browse .action-icon-wrapper {
+        background: linear-gradient(135deg, #8b5cf6 0%, #7c3aed 100%);
+    }
+    
+    .action-card:hover .action-icon-wrapper {
+        transform: scale(1.1) rotate(5deg);
+        box-shadow: 0 4px 12px rgba(0,0,0,0.15);
+    }
+    
+    .action-card .action-icon {
+        font-size: 1.75rem;
+        color: white;
+        display: block;
+    }
+    
+    .action-card-content {
+        flex: 1;
+    }
+    
+    .action-card h6 {
+        font-weight: 600;
+        margin: 0 0 0.25rem 0;
+        color: #1e40af;
+        font-size: 1rem;
+    }
+    
+    .action-card small {
+        color: #6b7280;
+        font-size: 0.85rem;
+        display: block;
+    }
+    
+    .action-card:hover h6 {
+        color: var(--primary-color);
+    }
+    
+    .action-card:hover .bi-arrow-right {
+        color: var(--primary-color) !important;
+        transform: translateX(4px);
+    }
+    
+    .empty-state-enhanced {
+        text-align: center;
+        padding: 4rem 2rem;
+        background: white;
+        border-radius: 16px;
+        box-shadow: var(--shadow-md);
+    }
+    
+    .empty-state-enhanced .empty-icon {
+        font-size: 6rem;
+        background: var(--primary-gradient);
+        -webkit-background-clip: text;
+        -webkit-text-fill-color: transparent;
+        background-clip: text;
+        margin-bottom: 1.5rem;
+        animation: float 3s ease-in-out infinite;
+    }
+    
+    @keyframes float {
+        0%, 100% { transform: translateY(0px); }
+        50% { transform: translateY(-10px); }
+    }
+    
+    .profile-badge {
+        display: inline-flex;
+        align-items: center;
+        gap: 0.5rem;
+        padding: 0.75rem 1.5rem;
+        background: var(--primary-gradient);
+        color: white;
+        border-radius: 25px;
+        font-weight: 600;
+        margin: 0.25rem;
+        font-size: 1.2rem;
+        box-shadow: var(--shadow-md);
+    }
+    
+    .section-divider {
+        height: 2px;
+        background: linear-gradient(90deg, transparent, #e0e0e0, transparent);
+        margin: 2rem 0;
+    }
+    
+    .profile-completeness {
+        background: linear-gradient(135deg, #ffffff 0%, #f0f7ff 100%);
+        border-radius: 16px;
+        padding: 1.5rem;
+        margin-bottom: 1.5rem;
+        box-shadow: var(--shadow-md);
+        border: 2px solid #e0e7ff;
+    }
+    
+    .completeness-bar {
+        height: 12px;
+        background: #e5e7eb;
+        border-radius: 10px;
+        overflow: hidden;
+        margin-top: 1rem;
+    }
+    
+    .completeness-fill {
+        height: 100%;
+        background: var(--primary-gradient);
+        border-radius: 10px;
+        transition: width 1s ease;
+        box-shadow: 0 2px 8px rgba(37, 99, 235, 0.3);
+    }
+    
+    .info-card {
+        background: white;
+        border-radius: 12px;
+        padding: 1.25rem;
+        margin-bottom: 1rem;
+        box-shadow: var(--shadow-sm);
+        border-left: 3px solid var(--primary-color);
+        transition: var(--transition);
+    }
+    
+    .info-card:hover {
+        box-shadow: var(--shadow-md);
+        transform: translateX(4px);
+    }
+    
+    .info-card i {
+        color: var(--primary-color);
+        margin-right: 0.5rem;
+    }
+    
+    .experience-item, .education-item, .cert-item {
+        background: #f8faff;
+        border-left: 3px solid var(--primary-color);
+        border-radius: 8px;
+        padding: 1rem;
+        margin-bottom: 1rem;
+        transition: var(--transition);
+    }
+    
+    .experience-item:hover, .education-item:hover, .cert-item:hover {
+        background: #eff6ff;
+        transform: translateX(4px);
+        box-shadow: var(--shadow-sm);
+    }
+    
+    .skill-badge-enhanced {
+        display: inline-block;
+        padding: 0.6rem 1.2rem;
+        margin: 0.4rem 0.4rem 0.4rem 0;
+        background: linear-gradient(135deg, #2563eb 0%, #3b82f6 100%);
+        color: white;
+        border-radius: 20px;
+        font-weight: 500;
+        font-size: 0.9rem;
+        box-shadow: 0 2px 8px rgba(37, 99, 235, 0.2);
+        transition: var(--transition);
+    }
+    
+    .skill-badge-enhanced:hover {
+        transform: translateY(-2px);
+        box-shadow: 0 4px 12px rgba(37, 99, 235, 0.3);
+    }
+    
+    .welcome-banner {
+        background: var(--primary-gradient);
+        color: white;
+        border-radius: 16px;
+        padding: 2rem;
+        margin-bottom: 2rem;
+        box-shadow: var(--shadow-lg);
+        position: relative;
+        overflow: hidden;
+    }
+    
+    .welcome-banner::before {
+        content: '';
+        position: absolute;
+        top: -50%;
+        right: -50%;
+        width: 200%;
+        height: 200%;
+        background: radial-gradient(circle, rgba(255,255,255,0.1) 0%, transparent 70%);
+        animation: rotate 20s linear infinite;
+    }
+    
+    @keyframes rotate {
+        from { transform: rotate(0deg); }
+        to { transform: rotate(360deg); }
+    }
+    
+    .welcome-banner h2 {
+        position: relative;
+        z-index: 1;
+        margin: 0;
+        font-weight: 700;
+    }
+    
+    .welcome-banner p {
+        position: relative;
+        z-index: 1;
+        margin: 0.5rem 0 0 0;
+        opacity: 0.95;
+    }
+</style>
+{% endblock %}
+
+{% block content %}
+<div class="page-header">
+    <div class="container">
+        <div class="text-center mb-3">
+            <img src="{% static 'images/kuwait-university-logo.png' %}" alt="Kuwait University" style="width: 60px; height: 60px; object-fit: contain;">
+        </div>
+        <h1><i class="bi bi-person-badge-fill"></i> {% trans "Student Dashboard" %}</h1>
+    </div>
+</div>
+
+{% if cv_profile %}
+    <!-- Welcome Banner -->
+    <div class="welcome-banner">
+        <h2><i class="bi bi-hand-thumbs-up-fill"></i> {% trans "Welcome back" %}, {{ user.get_full_name|default:user.username }}!</h2>
+        <p>{% trans "Your profile is ready. Companies can now discover your talents!" %}</p>
+    </div>
+
+    <!-- Profile Completeness Indicator -->
+    <div class="profile-completeness">
+        <div class="d-flex justify-content-between align-items-center mb-2">
+            <h6 class="mb-0"><i class="bi bi-check-circle-fill text-success"></i> {% trans "Profile Completeness" %}</h6>
+            <strong id="completeness-percent">0%</strong>
+        </div>
+        <div class="completeness-bar">
+            <div class="completeness-fill" id="completeness-fill" style="width: 0%;"></div>
+        </div>
+        <small class="text-muted mt-2 d-block">{% trans "Complete your profile to increase visibility" %}</small>
+    </div>
+    <!-- Statistics Overview -->
+    <div class="dashboard-stats">
+        <div class="stat-box">
+            <i class="bi bi-star-fill stat-icon"></i>
+            <div class="stat-value">{{ cv_profile.gpa|default:"N/A" }}</div>
+            <div class="stat-label">{% trans "GPA" %}</div>
+        </div>
+        <div class="stat-box">
+            <i class="bi bi-tools stat-icon"></i>
+            <div class="stat-value">{{ cv_profile.skills|length|default:0 }}</div>
+            <div class="stat-label">{% trans "Skills" %}</div>
+        </div>
+        <div class="stat-box">
+            <i class="bi bi-briefcase stat-icon"></i>
+            <div class="stat-value">{{ cv_profile.experience|length|default:0 }}</div>
+            <div class="stat-label">{% trans "Experiences" %}</div>
+        </div>
+        <div class="stat-box">
+            <i class="bi bi-award stat-icon"></i>
+            <div class="stat-value">{{ cv_profile.certifications|length|default:0 }}</div>
+            <div class="stat-label">{% trans "Certifications" %}</div>
+        </div>
+    </div>
+
+    <div class="row">
+        <div class="col-lg-8">
+            <!-- Profile Header -->
+            <div class="profile-section">
+                <div class="text-center mb-4">
+                    <div class="mb-3">
+                        <div class="profile-badge" style="font-size: 1.3rem; padding: 1.2rem 2.5rem; margin-bottom: 1.5rem; display: inline-block;">
+                            <i class="bi bi-person-circle-fill"></i>
+                            <span>{{ cv_profile.full_name|default:"N/A" }}</span>
+                        </div>
+                    </div>
+                    <div class="row justify-content-center mt-3">
+                        {% if cv_profile.email %}
+                        <div class="col-md-6 mb-2">
+                            <div class="info-card">
+                                <i class="bi bi-envelope-fill"></i>
+                                <strong>{% trans "Email" %}:</strong> {{ cv_profile.email }}
+                            </div>
+                        </div>
+                        {% endif %}
+                        {% if cv_profile.phone %}
+                        <div class="col-md-6 mb-2">
+                            <div class="info-card">
+                                <i class="bi bi-telephone-fill"></i>
+                                <strong>{% trans "Phone" %}:</strong> {{ cv_profile.phone }}
+                            </div>
+                        </div>
+                        {% endif %}
+                    </div>
+                </div>
+            </div>
+
+            <!-- Summary Section -->
+            {% if cv_profile.summary %}
+            <div class="profile-section">
+                <h5><i class="bi bi-file-text-fill"></i> {% trans "Professional Summary" %}</h5>
+                <p style="line-height: 1.8; color: #495057;">{{ cv_profile.summary }}</p>
+            </div>
+            {% endif %}
+
+            <!-- Education & Major -->
+            <div class="info-grid">
+                {% if cv_profile.major %}
+                <div class="profile-section">
+                    <h5><i class="bi bi-book-fill"></i> {% trans "Major" %}</h5>
+                    <p class="mb-0" style="font-size: 1.1rem; font-weight: 500;">{{ cv_profile.major }}</p>
+                </div>
+                {% endif %}
+                
+                {% if cv_profile.gpa %}
+                <div class="profile-section">
+                    <h5><i class="bi bi-star-fill"></i> {% trans "GPA" %}</h5>
+                    <p class="mb-0">
+                        <span class="badge bg-success" style="font-size: 1.1rem; padding: 0.5rem 1rem;">{{ cv_profile.gpa }}</span>
+                    </p>
+                </div>
+                {% endif %}
+            </div>
+
+            <!-- Skills Section -->
+            {% if cv_profile.skills %}
+            <div class="profile-section">
+                <h5><i class="bi bi-tools"></i> {% trans "Skills" %} <span class="badge bg-primary ms-2">{{ cv_profile.skills|length }}</span></h5>
+                <div>
+                    {% for skill in cv_profile.skills %}
+                        <span class="skill-badge-enhanced">{{ skill }}</span>
+                    {% endfor %}
+                </div>
+            </div>
+            {% endif %}
+
+            <!-- Education Section -->
+            {% if cv_profile.education %}
+            <div class="profile-section">
+                <h5><i class="bi bi-mortarboard-fill"></i> {% trans "Education" %} <span class="badge bg-success ms-2">{{ cv_profile.education|length }}</span></h5>
+                <div>
+                    {% for edu in cv_profile.education %}
+                        <div class="education-item">
+                            <div class="d-flex align-items-start">
+                                <i class="bi bi-mortarboard-fill text-success me-2 mt-1" style="font-size: 1.2rem;"></i>
+                                <div style="flex: 1;">
+                                    <p class="mb-0" style="line-height: 1.6; color: #374151;">{{ edu }}</p>
+                                </div>
+                            </div>
+                        </div>
+                    {% endfor %}
+                </div>
+            </div>
+            {% endif %}
+
+            <!-- Experience Section -->
+            {% if cv_profile.experience %}
+            <div class="profile-section">
+                <h5><i class="bi bi-briefcase-fill"></i> {% trans "Experience" %} <span class="badge bg-primary ms-2">{{ cv_profile.experience|length }}</span></h5>
+                <div>
+                    {% for exp in cv_profile.experience %}
+                        <div class="experience-item">
+                            <div class="d-flex align-items-start">
+                                <i class="bi bi-briefcase-fill text-primary me-2 mt-1" style="font-size: 1.2rem;"></i>
+                                <div style="flex: 1;">
+                                    <p class="mb-0" style="line-height: 1.6; color: #374151;">{{ exp }}</p>
+                                </div>
+                            </div>
+                        </div>
+                    {% endfor %}
+                </div>
+            </div>
+            {% endif %}
+
+            <!-- Certifications Section -->
+            {% if cv_profile.certifications %}
+            <div class="profile-section">
+                <h5><i class="bi bi-award-fill"></i> {% trans "Certifications" %} <span class="badge bg-warning ms-2">{{ cv_profile.certifications|length }}</span></h5>
+                <div>
+                    {% for cert in cv_profile.certifications %}
+                        <div class="cert-item">
+                            <div class="d-flex align-items-start">
+                                <i class="bi bi-award-fill text-warning me-2 mt-1" style="font-size: 1.2rem;"></i>
+                                <div style="flex: 1;">
+                                    <p class="mb-0" style="line-height: 1.6; color: #374151;">{{ cert }}</p>
+                                </div>
+                            </div>
+                        </div>
+                    {% endfor %}
+                </div>
+            </div>
+            {% endif %}
+
+            <!-- Languages Section -->
+            {% if cv_profile.languages %}
+            <div class="profile-section">
+                <h5><i class="bi bi-translate"></i> {% trans "Languages" %} <span class="badge bg-info ms-2">{{ cv_profile.languages|length }}</span></h5>
+                <div>
+                    {% for lang in cv_profile.languages %}
+                        <span class="skill-badge-enhanced" style="background: linear-gradient(135deg, #06b6d4 0%, #0891b2 100%);">{{ lang }}</span>
+                    {% endfor %}
+                </div>
+            </div>
+            {% endif %}
+        </div>
+
+        <!-- Quick Actions Sidebar -->
+        <div class="col-lg-4">
+            <div class="card" style="border: none; box-shadow: var(--shadow-lg); border-radius: 16px; position: sticky; top: 20px; background: linear-gradient(135deg, #ffffff 0%, #f8faff 100%);">
+                <div class="card-header" style="background: var(--primary-gradient); color: white; border-radius: 16px 16px 0 0; padding: 1.25rem;">
+                    <h5 class="mb-0"><i class="bi bi-lightning-charge-fill"></i> {% trans "Quick Actions" %}</h5>
+                </div>
+                <div class="card-body p-4">
+                    <div class="quick-actions">
+                        <a href="{% url 'cv_extraction:edit_cv_profile' %}" class="action-card edit">
+                            <div class="action-icon-wrapper">
+                                <i class="bi bi-pencil-fill action-icon"></i>
+                            </div>
+                            <div class="action-card-content">
+                                <h6>{% trans "Edit Profile" %}</h6>
+                                <small>{% trans "Update your information" %}</small>
+                            </div>
+                            <i class="bi bi-arrow-right" style="color: #9ca3af; font-size: 1.2rem; transition: var(--transition);"></i>
+                        </a>
+                        <a href="{% url 'cv_extraction:student_profile' %}" class="action-card view">
+                            <div class="action-icon-wrapper">
+                                <i class="bi bi-eye-fill action-icon"></i>
+                            </div>
+                            <div class="action-card-content">
+                                <h6>{% trans "View Public Profile" %}</h6>
+                                <small>{% trans "See how others see you" %}</small>
+                            </div>
+                            <i class="bi bi-arrow-right" style="color: #9ca3af; font-size: 1.2rem; transition: var(--transition);"></i>
+                        </a>
+                        <a href="{% url 'cv_extraction:student_browse' %}" class="action-card browse">
+                            <div class="action-icon-wrapper">
+                                <i class="bi bi-people-fill action-icon"></i>
+                            </div>
+                            <div class="action-card-content">
+                                <h6>{% trans "Browse Students" %}</h6>
+                                <small>{% trans "Explore other profiles" %}</small>
+                            </div>
+                            <i class="bi bi-arrow-right" style="color: #9ca3af; font-size: 1.2rem; transition: var(--transition);"></i>
+                        </a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+{% else %}
+    <!-- Enhanced Empty State -->
+    <div class="row">
+        <div class="col-md-10 col-lg-8 mx-auto">
+            <div class="empty-state-enhanced">
+                <i class="bi bi-file-earmark-plus-fill empty-icon"></i>
+                <h2 class="mb-3">{% trans "No CV Profile Found" %}</h2>
+                <p class="lead text-muted mb-4">{% trans "Upload your CV to create your profile and start showcasing your skills to companies" %}</p>
+                <a href="{% url 'cv_extraction:upload_cv' %}" class="btn btn-primary btn-lg" style="padding: 1rem 2.5rem; font-size: 1.1rem; background: var(--primary-gradient); border: none;">
+                    <i class="bi bi-cloud-upload-fill"></i> {% trans "Upload Your CV" %}
+                </a>
+                <div class="mt-4">
+                    <small class="text-muted">
+                        <i class="bi bi-info-circle"></i> 
+                        {% trans "Supported formats: PDF, DOCX" %}
+                    </small>
+                </div>
+            </div>
+        </div>
+    </div>
+{% endif %}
+
+<script>
+// Display profile completeness
+document.addEventListener('DOMContentLoaded', function() {
+    const completeness = {{ profile_completeness|default:0 }};
+    const fillElement = document.getElementById('completeness-fill');
+    const percentElement = document.getElementById('completeness-percent');
+    
+    if (fillElement && percentElement) {
+        setTimeout(() => {
+            fillElement.style.width = completeness + '%';
+            percentElement.textContent = completeness + '%';
+            
+            // Change color based on completeness
+            if (completeness >= 75) {
+                fillElement.style.background = 'linear-gradient(135deg, #10b981 0%, #059669 100%)';
+            } else if (completeness >= 50) {
+                fillElement.style.background = 'linear-gradient(135deg, #3b82f6 0%, #2563eb 100%)';
+            } else {
+                fillElement.style.background = 'linear-gradient(135deg, #f59e0b 0%, #d97706 100%)';
+            }
+        }, 300);
+    }
+});
+</script>
+{% endblock %}
+

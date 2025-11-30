@@ -1,0 +1,109 @@
+{% extends 'base.html' %}
+{% load i18n %}
+{% load static %}
+
+{% block title %}{% if profile_user %}{{ profile_user.username }}{% else %}{{ cv_profile.full_name|default:"Student" }}{% endif %}'s Profile - {% trans "KU Career Portal" %}{% endblock %}
+
+{% block content %}
+<div class="page-header">
+    <div class="container">
+        <div class="text-center mb-3">
+            <img src="{% static 'images/kuwait-university-logo.png' %}" alt="Kuwait University" style="width: 60px; height: 60px; object-fit: contain;"/>
+        </div>
+        <h1><i class="bi bi-person-badge-fill"></i> {% trans "Student Profile" %}</h1>
+    </div>
+</div>
+
+<div class="row">
+    <div class="col-12">
+        <div class="card">
+            <div class="card-header" style="background: var(--primary-gradient); color: white;">
+                <h4 class="mb-0">
+                    <i class="bi bi-person-badge-fill"></i> 
+                    {{ cv_profile.full_name|default:"Student" }}{% if profile_user %} ({{ profile_user.username }}){% endif %}
+                </h4>
+            </div>
+            <div class="card-body">
+                <div class="profile-header">
+                    <h3>{{ cv_profile.full_name|default:"Not provided" }}</h3>
+                    <p class="mb-1"><i class="bi bi-envelope"></i> {{ cv_profile.email|default:"Not provided" }}</p>
+                    <p class="mb-0"><i class="bi bi-telephone"></i> {{ cv_profile.phone|default:"Not provided" }}</p>
+                </div>
+                
+                {% if cv_profile.summary %}
+                <div class="mb-3">
+                    <h5><i class="bi bi-file-text"></i> {% trans "Summary" %}</h5>
+                    <p>{{ cv_profile.summary }}</p>
+                </div>
+                {% endif %}
+                
+                {% if cv_profile.major %}
+                <div class="mb-3">
+                    <h5><i class="bi bi-book"></i> {% trans "Major" %}</h5>
+                    <p>{{ cv_profile.major }}</p>
+                </div>
+                {% endif %}
+                
+                {% if cv_profile.gpa %}
+                <div class="mb-3">
+                    <h5><i class="bi bi-star-fill"></i> {% trans "GPA" %}</h5>
+                    <p><span class="badge bg-success skill-badge">{{ cv_profile.gpa }}</span></p>
+                </div>
+                {% endif %}
+                
+                {% if cv_profile.skills %}
+                <div class="mb-3">
+                    <h5><i class="bi bi-tools"></i> {% trans "Skills" %}</h5>
+                    {% for skill in cv_profile.skills %}
+                        <span class="badge bg-secondary skill-badge">{{ skill }}</span>
+                    {% endfor %}
+                </div>
+                {% endif %}
+                
+                {% if cv_profile.education %}
+                <div class="mb-3">
+                    <h5><i class="bi bi-mortarboard"></i> {% trans "Education" %}</h5>
+                    <ul>
+                        {% for edu in cv_profile.education %}
+                            <li>{{ edu }}</li>
+                        {% endfor %}
+                    </ul>
+                </div>
+                {% endif %}
+                
+                {% if cv_profile.experience %}
+                <div class="mb-3">
+                    <h5><i class="bi bi-briefcase"></i> {% trans "Experience" %}</h5>
+                    <ul>
+                        {% for exp in cv_profile.experience %}
+                            <li>{{ exp }}</li>
+                        {% endfor %}
+                    </ul>
+                </div>
+                {% endif %}
+                
+                {% if cv_profile.certifications %}
+                <div class="mb-3">
+                    <h5><i class="bi bi-award"></i> {% trans "Certifications" %}</h5>
+                    <ul>
+                        {% for cert in cv_profile.certifications %}
+                            <li>{{ cert }}</li>
+                        {% endfor %}
+                    </ul>
+                </div>
+                {% endif %}
+                
+                {% if cv_profile.languages %}
+                <div class="mb-3">
+                    <h5><i class="bi bi-translate"></i> {% trans "Languages" %}</h5>
+                    {% for lang in cv_profile.languages %}
+                        <span class="badge bg-info skill-badge">{{ lang }}</span>
+                    {% endfor %}
+                </div>
+                {% endif %}
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}
+

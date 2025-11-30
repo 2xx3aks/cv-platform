@@ -1,0 +1,111 @@
+{% extends 'base.html' %}
+{% load i18n %}
+{% load static %}
+
+{% block title %}{% trans "Edit CV Profile" %} - {% trans "KU Career Portal" %}{% endblock %}
+
+{% block content %}
+<div class="page-header">
+    <div class="container">
+        <div class="text-center mb-3">
+            <img src="{% static 'images/kuwait-university-logo.png' %}" alt="Kuwait University" style="width: 60px; height: 60px; object-fit: contain;"/>
+        </div>
+        <h1><i class="bi bi-file-earmark-person"></i> {% trans "Edit CV Profile" %}</h1>
+    </div>
+</div>
+
+<div class="row mb-3">
+    <div class="col-12">
+        <a href="{% url 'cv_extraction:admin_user_detail' target_user.id %}" class="btn btn-secondary">
+            <i class="bi bi-arrow-left"></i> {% trans "Back to User Details" %}
+        </a>
+    </div>
+</div>
+
+<div class="row">
+    <div class="col-md-10 mx-auto">
+        <div class="card">
+            <div class="card-header" style="background: var(--primary-gradient); color: white;">
+                <h5 class="mb-0"><i class="bi bi-file-earmark-edit"></i> {% trans "Edit CV Profile for" %} {{ target_user.username }}</h5>
+            </div>
+            <div class="card-body">
+                <form method="post">
+                    {% csrf_token %}
+                    
+                    <div class="row">
+                        <div class="col-md-6 mb-3">
+                            <label for="full_name" class="form-label">{% trans "Full Name" %}</label>
+                            <input type="text" class="form-control" id="full_name" name="full_name" value="{{ cv_profile.full_name|default:'' }}">
+                        </div>
+                        <div class="col-md-6 mb-3">
+                            <label for="email" class="form-label">{% trans "Email" %}</label>
+                            <input type="email" class="form-control" id="email" name="email" value="{{ cv_profile.email|default:'' }}">
+                        </div>
+                    </div>
+                    
+                    <div class="row">
+                        <div class="col-md-6 mb-3">
+                            <label for="phone" class="form-label">{% trans "Phone" %}</label>
+                            <input type="text" class="form-control" id="phone" name="phone" value="{{ cv_profile.phone|default:'' }}">
+                        </div>
+                        <div class="col-md-6 mb-3">
+                            <label for="major" class="form-label">{% trans "Major" %}</label>
+                            <input type="text" class="form-control" id="major" name="major" value="{{ cv_profile.major|default:'' }}">
+                        </div>
+                    </div>
+                    
+                    <div class="row">
+                        <div class="col-md-6 mb-3">
+                            <label for="gpa" class="form-label">{% trans "GPA" %}</label>
+                            <input type="number" step="0.01" min="0" max="4" class="form-control" id="gpa" name="gpa" value="{{ cv_profile.gpa|default:'' }}">
+                        </div>
+                    </div>
+                    
+                    <div class="mb-3">
+                        <label for="summary" class="form-label">{% trans "Summary" %}</label>
+                        <textarea class="form-control" id="summary" name="summary" rows="4">{{ cv_profile.summary|default:'' }}</textarea>
+                    </div>
+                    
+                    <div class="mb-3">
+                        <label for="skills" class="form-label">{% trans "Skills" %} <small class="text-muted">({% trans "comma-separated" %})</small></label>
+                        <input type="text" class="form-control" id="skills" name="skills" value="{% if cv_profile.skills %}{{ cv_profile.skills|join:', ' }}{% endif %}" placeholder="{% trans 'e.g., Python, Django, MongoDB' %}">
+                    </div>
+                    
+                    <div class="mb-3">
+                        <label for="languages" class="form-label">{% trans "Languages" %} <small class="text-muted">({% trans "comma-separated" %})</small></label>
+                        <input type="text" class="form-control" id="languages" name="languages" value="{% if cv_profile.languages %}{{ cv_profile.languages|join:', ' }}{% endif %}" placeholder="{% trans 'e.g., English, Arabic, French' %}">
+                    </div>
+                    
+                    <div class="mb-3">
+                        <label for="education" class="form-label">{% trans "Education" %} <small class="text-muted">({% trans "one per line" %})</small></label>
+                        <textarea class="form-control" id="education" name="education" rows="5" placeholder="{% trans 'e.g., Bachelor of Science in Computer Science, University Name, 2020-2024' %}">{% if cv_profile.education %}{% for item in cv_profile.education %}{{ item }}{% if not forloop.last %}
+{% endif %}{% endfor %}{% endif %}</textarea>
+                    </div>
+                    
+                    <div class="mb-3">
+                        <label for="experience" class="form-label">{% trans "Experience" %} <small class="text-muted">({% trans "one per line" %})</small></label>
+                        <textarea class="form-control" id="experience" name="experience" rows="5" placeholder="{% trans 'e.g., Software Developer at Company Name, 2022-2024' %}">{% if cv_profile.experience %}{% for item in cv_profile.experience %}{{ item }}{% if not forloop.last %}
+{% endif %}{% endfor %}{% endif %}</textarea>
+                    </div>
+                    
+                    <div class="mb-3">
+                        <label for="certifications" class="form-label">{% trans "Certifications" %} <small class="text-muted">({% trans "one per line" %})</small></label>
+                        <textarea class="form-control" id="certifications" name="certifications" rows="3" placeholder="{% trans 'e.g., AWS Certified Developer, 2023' %}">{% if cv_profile.certifications %}{% for item in cv_profile.certifications %}{{ item }}{% if not forloop.last %}
+{% endif %}{% endfor %}{% endif %}</textarea>
+                    </div>
+                    
+                    <div class="d-grid gap-2">
+                        <button type="submit" class="btn btn-primary">
+                            <i class="bi bi-save"></i> {% trans "Save Changes" %}
+                        </button>
+                        <a href="{% url 'cv_extraction:admin_user_detail' target_user.id %}" class="btn btn-secondary">
+                            <i class="bi bi-x-circle"></i> {% trans "Cancel" %}
+                        </a>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}
+

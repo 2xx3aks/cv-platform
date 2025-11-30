@@ -1,0 +1,78 @@
+/* Reusable welcome/banner and subtle global background styles */
+:root {
+    --welcome-gradient: linear-gradient(135deg, rgba(37,99,235,0.95) 0%, rgba(30,64,175,0.95) 100%);
+    --welcome-overlay: rgba(255,255,255,0.06);
+}
+
+/* Full-page subtle decorative background (complements existing base styles) */
+body::after {
+    content: '';
+    position: fixed;
+    inset: 0;
+    pointer-events: none;
+    background-image: radial-gradient(circle at 10% 30%, rgba(37,99,235,0.04) 0%, transparent 20%),
+                      radial-gradient(circle at 85% 80%, rgba(30,64,175,0.03) 0%, transparent 25%);
+    z-index: 0;
+}
+
+/* Welcome banner — reusable */
+.welcome-banner {
+    background: var(--welcome-gradient);
+    color: #fff;
+    border-radius: 16px;
+    padding: 1.6rem 2rem;
+    margin-bottom: 1.75rem;
+    box-shadow: 0 10px 30px rgba(30,64,175,0.18);
+    position: relative;
+    overflow: hidden;
+    z-index: 2;
+}
+
+.welcome-banner .icon-wrap {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    width: 56px;
+    height: 56px;
+    border-radius: 12px;
+    background: rgba(255,255,255,0.12);
+    margin-right: 0.75rem;
+}
+
+.welcome-banner h2 {
+    margin: 0;
+    font-weight: 700;
+    font-size: 1.4rem;
+}
+
+.welcome-banner p {
+    margin: 0.35rem 0 0 0;
+    opacity: 0.95;
+}
+
+.welcome-banner::before {
+    content: '';
+    position: absolute;
+    top: -40%;
+    right: -40%;
+    width: 220%;
+    height: 220%;
+    background: radial-gradient(circle at center, rgba(255,255,255,0.08) 0%, transparent 45%);
+    transform: rotate(15deg);
+    animation: slow-rotate 18s linear infinite;
+    pointer-events: none;
+}
+
+@keyframes slow-rotate {
+    from { transform: rotate(0deg); }
+    to { transform: rotate(360deg); }
+}
+
+/* RTL adjustments */
+body[dir="rtl"] .welcome-banner .icon-wrap { margin-right: 0; margin-left: 0.75rem; }
+
+/* Responsive tweaks */
+@media (max-width: 768px) {
+    .welcome-banner { padding: 1rem 1rem; }
+    .welcome-banner h2 { font-size: 1.15rem; }
+}

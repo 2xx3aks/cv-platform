@@ -1,0 +1,95 @@
+{% extends 'base.html' %}
+{% load i18n %}
+{% load static %}
+
+{% block title %}{% trans "Edit User" %} - {% trans "KU Career Portal" %}{% endblock %}
+
+{% block content %}
+<div class="page-header">
+    <div class="container">
+        <div class="text-center mb-3">
+            <img src="{% static 'images/kuwait-university-logo.png' %}" alt="Kuwait University" style="width: 60px; height: 60px; object-fit: contain;"/>
+        </div>
+        <h1><i class="bi bi-pencil-square"></i> {% trans "Edit User" %}</h1>
+    </div>
+</div>
+
+<div class="row mb-3">
+    <div class="col-12">
+        <a href="{% url 'cv_extraction:admin_user_detail' target_user.id %}" class="btn btn-secondary">
+            <i class="bi bi-arrow-left"></i> {% trans "Back to User Details" %}
+        </a>
+    </div>
+</div>
+
+<div class="row">
+    <div class="col-md-8 mx-auto">
+        <div class="card">
+            <div class="card-header" style="background: var(--primary-gradient); color: white;">
+                <h5 class="mb-0"><i class="bi bi-person-gear"></i> {% trans "Edit User Information" %}</h5>
+            </div>
+            <div class="card-body">
+                <form method="post">
+                    {% csrf_token %}
+                    <div class="mb-3">
+                        <label for="username" class="form-label">{% trans "Username" %}</label>
+                        <input type="text" class="form-control" id="username" name="username" value="{{ target_user.username }}" required>
+                        <small class="form-text text-muted">{% trans "Username can be changed by admin" %}</small>
+                    </div>
+                    
+                    <div class="mb-3">
+                        <label for="email" class="form-label">{% trans "Email" %}</label>
+                        <input type="email" class="form-control" id="email" name="email" value="{{ target_user.email }}" required>
+                    </div>
+                    
+                    <div class="row">
+                        <div class="col-md-6 mb-3">
+                            <label for="first_name" class="form-label">{% trans "First Name" %}</label>
+                            <input type="text" class="form-control" id="first_name" name="first_name" value="{{ target_user.first_name }}">
+                        </div>
+                        <div class="col-md-6 mb-3">
+                            <label for="last_name" class="form-label">{% trans "Last Name" %}</label>
+                            <input type="text" class="form-control" id="last_name" name="last_name" value="{{ target_user.last_name }}">
+                        </div>
+                    </div>
+                    
+                    <div class="mb-3">
+                        <label for="role" class="form-label">{% trans "Role" %}</label>
+                        <select class="form-select" id="role" name="role" required>
+                            <option value="student" {% if target_user.role == 'student' %}selected{% endif %}>{% trans "Student" %}</option>
+                            <option value="company" {% if target_user.role == 'company' %}selected{% endif %}>{% trans "Company" %}</option>
+                            <option value="admin" {% if target_user.role == 'admin' %}selected{% endif %}>{% trans "Admin" %}</option>
+                        </select>
+                    </div>
+                    
+                    <div class="mb-3">
+                        <label for="password" class="form-label">{% trans "New Password" %} ({% trans "Optional" %})</label>
+                        <input type="password" class="form-control" id="password" name="password" placeholder="{% trans 'Leave blank to keep current password' %}">
+                        <small class="form-text text-muted">{% trans "Enter new password to change it, or leave blank to keep current password" %}</small>
+                    </div>
+                    
+                    <div class="mb-3">
+                        <div class="form-check">
+                            <input class="form-check-input" type="checkbox" id="is_active" name="is_active" {% if target_user.is_active %}checked{% endif %}>
+                            <label class="form-check-label" for="is_active">
+                                {% trans "Active Account" %}
+                            </label>
+                        </div>
+                        <small class="form-text text-muted">{% trans "Inactive users cannot log in" %}</small>
+                    </div>
+                    
+                    <div class="d-grid gap-2">
+                        <button type="submit" class="btn btn-primary">
+                            <i class="bi bi-save"></i> {% trans "Save Changes" %}
+                        </button>
+                        <a href="{% url 'cv_extraction:admin_user_detail' target_user.id %}" class="btn btn-secondary">
+                            <i class="bi bi-x-circle"></i> {% trans "Cancel" %}
+                        </a>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}
+

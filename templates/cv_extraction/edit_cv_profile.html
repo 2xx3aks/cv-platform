@@ -1,0 +1,136 @@
+{% extends 'base.html' %}
+{% load i18n %}
+{% load static %}
+
+{% block title %}{% trans "Edit CV Profile" %} - KU Career Portal{% endblock %}
+
+{% block content %}
+<div class="page-header">
+    <div class="container">
+        <div class="text-center mb-3">
+            <img src="{% static 'images/kuwait-university-logo.png' %}" alt="Kuwait University" style="width: 60px; height: 60px; object-fit: contain;"/>
+        </div>
+        <h1><i class="bi bi-pencil-square"></i> {% trans "Edit CV Profile" %}</h1>
+    </div>
+</div>
+
+<div class="row">
+    <div class="col-12">
+            <div class="card-header bg-primary text-white">
+                <h5 class="mb-0"><i class="bi bi-file-earmark-person"></i> {% trans "Update Your CV Information" %}</h5>
+            </div>
+            <div class="card-body">
+                <form method="post">
+                    {% csrf_token %}
+                    
+                    <div class="row">
+                        <div class="col-md-6 mb-3">
+                            <label for="{{ form.full_name.id_for_label }}" class="form-label">{% trans "Full Name" %}</label>
+                            {{ form.full_name }}
+                            {% if form.full_name.errors %}
+                                <div class="text-danger">{{ form.full_name.errors }}</div>
+                            {% endif %}
+                        </div>
+                        <div class="col-md-6 mb-3">
+                            <label for="{{ form.email.id_for_label }}" class="form-label">{% trans "Email" %}</label>
+                            {{ form.email }}
+                            {% if form.email.errors %}
+                                <div class="text-danger">{{ form.email.errors }}</div>
+                            {% endif %}
+                        </div>
+                    </div>
+                    
+                    <div class="row">
+                        <div class="col-md-6 mb-3">
+                            <label for="{{ form.phone.id_for_label }}" class="form-label">{% trans "Phone" %}</label>
+                            {{ form.phone }}
+                            {% if form.phone.errors %}
+                                <div class="text-danger">{{ form.phone.errors }}</div>
+                            {% endif %}
+                        </div>
+                        <div class="col-md-6 mb-3">
+                            <label for="{{ form.major.id_for_label }}" class="form-label">{% trans "Major" %}</label>
+                            {{ form.major }}
+                            {% if form.major.errors %}
+                                <div class="text-danger">{{ form.major.errors }}</div>
+                            {% endif %}
+                        </div>
+                    </div>
+                    
+                    <div class="row">
+                        <div class="col-md-6 mb-3">
+                            <label for="{{ form.gpa.id_for_label }}" class="form-label">{% trans "GPA" %}</label>
+                            {{ form.gpa }}
+                            {% if form.gpa.errors %}
+                                <div class="text-danger">{{ form.gpa.errors }}</div>
+                            {% endif %}
+                        </div>
+                        <div class="col-md-6 mb-3">
+                            <label for="{{ form.languages.id_for_label }}" class="form-label">{% trans "Languages" %}</label>
+                            {{ form.languages }}
+                            <small class="form-text text-muted">{{ form.languages.help_text }}</small>
+                            {% if form.languages.errors %}
+                                <div class="text-danger">{{ form.languages.errors }}</div>
+                            {% endif %}
+                        </div>
+                    </div>
+                    
+                    <div class="mb-3">
+                        <label for="{{ form.summary.id_for_label }}" class="form-label">{% trans "Professional Summary" %}</label>
+                        {{ form.summary }}
+                        {% if form.summary.errors %}
+                            <div class="text-danger">{{ form.summary.errors }}</div>
+                        {% endif %}
+                    </div>
+                    
+                    <div class="mb-3">
+                        <label for="{{ form.skills.id_for_label }}" class="form-label">{% trans "Skills" %}</label>
+                        {{ form.skills }}
+                        <small class="form-text text-muted">{{ form.skills.help_text }}</small>
+                        {% if form.skills.errors %}
+                            <div class="text-danger">{{ form.skills.errors }}</div>
+                        {% endif %}
+                    </div>
+                    
+                    <div class="mb-3">
+                        <label for="{{ form.education.id_for_label }}" class="form-label">{% trans "Education" %}</label>
+                        {{ form.education }}
+                        <small class="form-text text-muted">{{ form.education.help_text }}</small>
+                        {% if form.education.errors %}
+                            <div class="text-danger">{{ form.education.errors }}</div>
+                        {% endif %}
+                    </div>
+                    
+                    <div class="mb-3">
+                        <label for="{{ form.experience.id_for_label }}" class="form-label">{% trans "Experience" %}</label>
+                        {{ form.experience }}
+                        <small class="form-text text-muted">{{ form.experience.help_text }}</small>
+                        {% if form.experience.errors %}
+                            <div class="text-danger">{{ form.experience.errors }}</div>
+                        {% endif %}
+                    </div>
+                    
+                    <div class="mb-3">
+                        <label for="{{ form.certifications.id_for_label }}" class="form-label">{% trans "Certifications" %}</label>
+                        {{ form.certifications }}
+                        <small class="form-text text-muted">{{ form.certifications.help_text }}</small>
+                        {% if form.certifications.errors %}
+                            <div class="text-danger">{{ form.certifications.errors }}</div>
+                        {% endif %}
+                    </div>
+                    
+                    <div class="d-flex justify-content-between">
+                        <a href="{% url 'cv_extraction:student_dashboard' %}" class="btn btn-secondary">
+                            <i class="bi bi-arrow-left"></i> {% trans "Cancel" %}
+                        </a>
+                        <button type="submit" class="btn btn-primary">
+                            <i class="bi bi-save"></i> {% trans "Save Changes" %}
+                        </button>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}
+

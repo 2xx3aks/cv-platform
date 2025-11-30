@@ -1,0 +1,594 @@
+# Arabic translations for CV Platform
+msgid ""
+msgstr ""
+"Content-Type: text/plain; charset=UTF-8\n"
+"Language: ar\n"
+
+msgid "CV Platform"
+msgstr "منصة السيرة الذاتية"
+
+msgid "Login"
+msgstr "تسجيل الدخول"
+
+msgid "Logout"
+msgstr "تسجيل الخروج"
+
+msgid "Register"
+msgstr "التسجيل"
+
+msgid "Dashboard"
+msgstr "لوحة التحكم"
+
+msgid "Upload CV"
+msgstr "رفع السيرة الذاتية"
+
+msgid "Student Dashboard"
+msgstr "لوحة تحكم الطالب"
+
+msgid "Company Dashboard"
+msgstr "لوحة تحكم الشركة"
+
+msgid "Admin Dashboard"
+msgstr "لوحة تحكم المدير"
+
+msgid "Browse Students"
+msgstr "تصفح الطلاب"
+
+msgid "Compare Students"
+msgstr "مقارنة الطلاب"
+
+msgid "Compare"
+msgstr "مقارنة"
+
+msgid "Profile"
+msgstr "الملف الشخصي"
+
+msgid "Username"
+msgstr "اسم المستخدم"
+
+msgid "Password"
+msgstr "كلمة المرور"
+
+msgid "Enter your username"
+msgstr "أدخل اسم المستخدم"
+
+msgid "Enter your password"
+msgstr "أدخل كلمة المرور"
+
+msgid "Don't have an account?"
+msgstr "ليس لديك حساب؟"
+
+msgid "Register here"
+msgstr "سجل هنا"
+
+msgid "Email"
+msgstr "البريد الإلكتروني"
+
+msgid "Role"
+msgstr "الدور"
+
+msgid "Select a role"
+msgstr "اختر دوراً"
+
+msgid "Student"
+msgstr "طالب"
+
+msgid "Company"
+msgstr "شركة"
+
+msgid "Confirm Password"
+msgstr "تأكيد كلمة المرور"
+
+msgid "Choose a username"
+msgstr "اختر اسم مستخدم"
+
+msgid "Enter your email"
+msgstr "أدخل بريدك الإلكتروني"
+
+msgid "Confirm your password"
+msgstr "أكد كلمة المرور"
+
+msgid "Already have an account?"
+msgstr "لديك حساب بالفعل؟"
+
+msgid "Login here"
+msgstr "سجل الدخول هنا"
+
+msgid "CV File"
+msgstr "ملف السيرة الذاتية"
+
+msgid "Supported formats"
+msgstr "الصيغ المدعومة"
+
+msgid "Maximum file size"
+msgstr "الحد الأقصى لحجم الملف"
+
+msgid "Your CV will be processed using AI to extract structured information."
+msgstr "سيتم معالجة سيرتك الذاتية باستخدام الذكاء الاصطناعي لاستخراج المعلومات المنظمة."
+
+msgid "Upload and Process CV"
+msgstr "رفع ومعالجة السيرة الذاتية"
+
+msgid "Your CV Profile"
+msgstr "ملفك الشخصي للسيرة الذاتية"
+
+msgid "Summary"
+msgstr "الملخص"
+
+msgid "Major"
+msgstr "التخصص"
+
+msgid "GPA"
+msgstr "المعدل التراكمي"
+
+msgid "Skills"
+msgstr "المهارات"
+
+msgid "Education"
+msgstr "التعليم"
+
+msgid "Experience"
+msgstr "الخبرة"
+
+msgid "Certifications"
+msgstr "الشهادات"
+
+msgid "Languages"
+msgstr "اللغات"
+
+msgid "Actions"
+msgstr "الإجراءات"
+
+msgid "Edit CV Profile"
+msgstr "تعديل ملف السيرة الذاتية"
+
+msgid "Upload New CV"
+msgstr "رفع سيرة ذاتية جديدة"
+
+msgid "View Public Profile"
+msgstr "عرض الملف الشخصي العام"
+
+msgid "No CV Profile Found"
+msgstr "لم يتم العثور على ملف سيرة ذاتية"
+
+msgid "Upload your CV to create your profile"
+msgstr "قم برفع سيرتك الذاتية لإنشاء ملفك الشخصي"
+
+msgid "All rights reserved"
+msgstr "جميع الحقوق محفوظة"
+
+msgid "Browse Other Students"
+msgstr "تصفح الطلاب الآخرين"
+
+msgid "CV Data Extracted Successfully"
+msgstr "تم استخراج بيانات السيرة الذاتية بنجاح"
+
+msgid "Review the information extracted from your CV"
+msgstr "راجع المعلومات المستخرجة من سيرتك الذاتية"
+
+msgid "File processed"
+msgstr "تم معالجة الملف"
+
+msgid "The following information was extracted from your CV and has been saved to your profile."
+msgstr "تم استخراج المعلومات التالية من سيرتك الذاتية وتم حفظها في ملفك الشخصي."
+
+msgid "Extracted Information"
+msgstr "المعلومات المستخرجة"
+
+msgid "Not found"
+msgstr "غير موجود"
+
+msgid "Go to Dashboard"
+msgstr "الذهاب إلى لوحة التحكم"
+
+msgid "Manage Users"
+msgstr "إدارة المستخدمين"
+
+msgid "User Management"
+msgstr "إدارة المستخدمين"
+
+msgid "All Users"
+msgstr "جميع المستخدمين"
+
+msgid "CV Profile"
+msgstr "ملف السيرة الذاتية"
+
+msgid "Yes"
+msgstr "نعم"
+
+msgid "No"
+msgstr "لا"
+
+msgid "Active"
+msgstr "نشط"
+
+msgid "Inactive"
+msgstr "غير نشط"
+
+msgid "View"
+msgstr "عرض"
+
+msgid "No users found"
+msgstr "لم يتم العثور على مستخدمين"
+
+msgid "User Details"
+msgstr "تفاصيل المستخدم"
+
+msgid "Back to Users"
+msgstr "العودة إلى المستخدمين"
+
+msgid "User Information"
+msgstr "معلومات المستخدم"
+
+msgid "Last Login"
+msgstr "آخر تسجيل دخول"
+
+msgid "Never"
+msgstr "أبداً"
+
+msgid "Edit User"
+msgstr "تعديل المستخدم"
+
+msgid "Back to User Details"
+msgstr "العودة إلى تفاصيل المستخدم"
+
+msgid "Edit User Information"
+msgstr "تعديل معلومات المستخدم"
+
+msgid "Username cannot be changed"
+msgstr "لا يمكن تغيير اسم المستخدم"
+
+msgid "Active Account"
+msgstr "حساب نشط"
+
+msgid "Inactive users cannot log in"
+msgstr "المستخدمون غير النشطين لا يمكنهم تسجيل الدخول"
+
+msgid "Save Changes"
+msgstr "حفظ التغييرات"
+
+msgid "Cancel"
+msgstr "إلغاء"
+
+msgid "No Other Students Found"
+msgstr "لم يتم العثور على طلاب آخرين"
+
+msgid "There are no other students with CV profiles yet."
+msgstr "لا يوجد طلاب آخرون لديهم ملفات سيرة ذاتية بعد."
+
+msgid "more"
+msgstr "المزيد"
+
+msgid "View Profile"
+msgstr "عرض الملف الشخصي"
+
+msgid "Welcome Back"
+msgstr "مرحباً بعودتك"
+
+msgid "Login to access your account"
+msgstr "سجل الدخول للوصول إلى حسابك"
+
+msgid "Create Account"
+msgstr "إنشاء حساب"
+
+msgid "Join our platform and showcase your skills"
+msgstr "انضم إلى منصتنا واعرض مهاراتك"
+
+msgid "Upload Your CV"
+msgstr "ارفع سيرتك الذاتية"
+
+msgid "Let AI extract your information automatically"
+msgstr "دع الذكاء الاصطناعي يستخرج معلوماتك تلقائياً"
+
+msgid "Extracted CV Data"
+msgstr "بيانات السيرة الذاتية المستخرجة"
+
+msgid "Full Name"
+msgstr "الاسم الكامل"
+
+msgid "Phone"
+msgstr "الهاتف"
+
+msgid "Not provided"
+msgstr "غير متوفر"
+
+msgid "Unknown"
+msgstr "غير معروف"
+
+msgid "N/A"
+msgstr "غير متوفر"
+
+msgid "Edit Profile"
+msgstr "تعديل الملف الشخصي"
+
+msgid "Edit Personal Information"
+msgstr "تعديل المعلومات الشخصية"
+
+msgid "Update Your Profile"
+msgstr "تحديث ملفك الشخصي"
+
+msgid "First Name"
+msgstr "الاسم الأول"
+
+msgid "Last Name"
+msgstr "اسم العائلة"
+
+msgid "Note"
+msgstr "ملاحظة"
+
+msgid "Username cannot be changed after registration."
+msgstr "لا يمكن تغيير اسم المستخدم بعد التسجيل."
+
+msgid "Update Your CV Information"
+msgstr "تحديث معلومات سيرتك الذاتية"
+
+msgid "Professional Summary"
+msgstr "الملخص المهني"
+
+msgid "Select Students to Compare"
+msgstr "اختر الطلاب للمقارنة"
+
+msgid "Select 2 or more students to compare"
+msgstr "اختر طالبين أو أكثر للمقارنة"
+
+msgid "No students with CV profiles available for comparison."
+msgstr "لا يوجد طلاب لديهم ملفات سيرة ذاتية متاحة للمقارنة."
+
+msgid "Comparing"
+msgstr "مقارنة"
+
+msgid "student(s)"
+msgstr "طالب/طلاب"
+
+msgid "Side-by-Side Comparison"
+msgstr "مقارنة جنباً إلى جنب"
+
+msgid "Criteria"
+msgstr "المعايير"
+
+msgid "Best"
+msgstr "الأفضل"
+
+msgid "Skills Count"
+msgstr "عدد المهارات"
+
+msgid "Experience Count"
+msgstr "عدد الخبرات"
+
+msgid "Education Count"
+msgstr "عدد المؤهلات التعليمية"
+
+msgid "Certifications Count"
+msgstr "عدد الشهادات"
+
+msgid "Overall Score"
+msgstr "النقاط الإجمالية"
+
+msgid "Compare Different Students"
+msgstr "مقارنة طلاب مختلفين"
+
+msgid "Filters"
+msgstr "المرشحات"
+
+msgid "GPA Range"
+msgstr "نطاق المعدل التراكمي"
+
+msgid "Min GPA"
+msgstr "الحد الأدنى للمعدل"
+
+msgid "Max GPA"
+msgstr "الحد الأقصى للمعدل"
+
+msgid "Skills (comma-separated)"
+msgstr "المهارات (مفصولة بفواصل)"
+
+msgid "Search"
+msgstr "بحث"
+
+msgid "Search by name, email, or summary"
+msgstr "ابحث بالاسم أو البريد الإلكتروني أو الملخص"
+
+msgid "Apply Filters"
+msgstr "تطبيق المرشحات"
+
+msgid "Clear Filters"
+msgstr "مسح المرشحات"
+
+msgid "Students Found"
+msgstr "الطلاب الموجودون"
+
+msgid "No Students Found"
+msgstr "لم يتم العثور على طلاب"
+
+msgid "Try adjusting your filters"
+msgstr "حاول تعديل المرشحات"
+
+msgid "Not a student account"
+msgstr "ليس حساب طالب"
+
+msgid "This profile belongs to a"
+msgstr "هذا الملف الشخصي ينتمي إلى"
+
+msgid "User account not found"
+msgstr "حساب المستخدم غير موجود"
+
+msgid "CV profile exists but user account is missing."
+msgstr "ملف السيرة الذاتية موجود لكن حساب المستخدم مفقود."
+
+msgid "Major not specified"
+msgstr "التخصص غير محدد"
+
+msgid "Student Profile"
+msgstr "الملف الشخصي للطالب"
+
+msgid "Successfully Extracted Information"
+msgstr "تم استخراج المعلومات بنجاح"
+
+msgid "Your CV has been processed and the following information was extracted:"
+msgstr "تم معالجة سيرتك الذاتية وتم استخراج المعلومات التالية:"
+
+msgid "Platform analytics and management"
+msgstr "تحليلات وإدارة المنصة"
+
+msgid "Total Students"
+msgstr "إجمالي الطلاب"
+
+msgid "Total Companies"
+msgstr "إجمالي الشركات"
+
+msgid "CV Profiles"
+msgstr "ملفات السيرة الذاتية"
+
+msgid "Average GPA"
+msgstr "متوسط المعدل التراكمي"
+
+msgid "Most Common Skills"
+msgstr "المهارات الأكثر شيوعاً"
+
+msgid "Majors Distribution"
+msgstr "توزيع التخصصات"
+
+msgid "No skills data available"
+msgstr "لا توجد بيانات مهارات متاحة"
+
+msgid "No majors data available"
+msgstr "لا توجد بيانات تخصصات متاحة"
+
+msgid "Admin Actions"
+msgstr "إجراءات المدير"
+
+msgid "Warning"
+msgstr "تحذير"
+
+msgid "Admin actions are permanent and cannot be undone."
+msgstr "إجراءات المدير دائمة ولا يمكن التراجع عنها."
+
+msgid "Django Admin Panel"
+msgstr "لوحة تحكم Django"
+
+msgid "Delete"
+msgstr "حذف"
+
+msgid "Edit"
+msgstr "تعديل"
+
+msgid "Delete User"
+msgstr "حذف المستخدم"
+
+msgid "Delete CV"
+msgstr "حذف السيرة الذاتية"
+
+msgid "Are you sure you want to delete this user?"
+msgstr "هل أنت متأكد من حذف هذا المستخدم؟"
+
+msgid "Are you sure you want to delete this CV profile?"
+msgstr "هل أنت متأكد من حذف ملف السيرة الذاتية هذا؟"
+
+msgid "Staff Status"
+msgstr "حالة الموظف"
+
+msgid "Superuser Status"
+msgstr "حالة المستخدم الفائق"
+
+msgid "Date Joined"
+msgstr "تاريخ الانضمام"
+
+msgid "View Full CV Profile"
+msgstr "عرض ملف السيرة الذاتية الكامل"
+
+msgid "No CV profile found for this user."
+msgstr "لم يتم العثور على ملف سيرة ذاتية لهذا المستخدم."
+
+msgid "Is Active"
+msgstr "نشط"
+
+msgid "User Detail"
+msgstr "تفاصيل المستخدم"
+
+msgid "User not available"
+msgstr "المستخدم غير متاح"
+
+msgid "Not specified"
+msgstr "غير محدد"
+
+msgid "e.g., Computer Science"
+msgstr "مثال: علوم الحاسوب"
+
+msgid "e.g., Python, JavaScript, Django"
+msgstr "مثال: Python، JavaScript، Django"
+
+msgid "Please select at least 2 students to compare"
+msgstr "يرجى اختيار طالبين على الأقل للمقارنة"
+
+msgid "Separate skills with commas"
+msgstr "افصل المهارات بفواصل"
+
+msgid "Enter each education entry on a new line"
+msgstr "أدخل كل مؤهل تعليمي في سطر جديد"
+
+msgid "Enter each experience entry on a new line"
+msgstr "أدخل كل خبرة في سطر جديد"
+
+msgid "Enter each certification on a new line"
+msgstr "أدخل كل شهادة في سطر جديد"
+
+msgid "Enter languages separated by commas"
+msgstr "أدخل اللغات مفصولة بفواصل"
+
+msgid "Enter skills separated by commas"
+msgstr "أدخل المهارات مفصولة بفواصل"
+
+msgid "Comma-separated skills"
+msgstr "مهارات مفصولة بفواصل"
+
+msgid "One entry per line"
+msgstr "مدخل واحد في كل سطر"
+
+msgid "Comma-separated languages"
+msgstr "لغات مفصولة بفواصل"
+
+msgid "Profile Completeness"
+msgstr "اكتمال الملف الشخصي"
+
+msgid "Complete your profile to increase visibility"
+msgstr "أكمل ملفك الشخصي لزيادة الرؤية"
+
+msgid "Your profile is ready. Companies can now discover your talents!"
+msgstr "ملفك الشخصي جاهز. يمكن للشركات الآن اكتشاف مواهبك!"
+
+msgid "Welcome back"
+msgstr "مرحباً بعودتك"
+
+msgid "Quick Actions"
+msgstr "إجراءات سريعة"
+
+msgid "Update your information"
+msgstr "حدّث معلوماتك"
+
+msgid "See how others see you"
+msgstr "انظر كيف يراك الآخرون"
+
+msgid "Explore other profiles"
+msgstr "استكشف الملفات الشخصية الأخرى"
+
+msgid "Experiences"
+msgstr "الخبرات"
+
+msgid "Kuwait University"
+msgstr "جامعة الكويت"
+
+msgid "Kuwait University CV Platform"
+msgstr "منصة جامعة الكويت للسيرة الذاتية"
+
+msgid "User Profile"
+msgstr "الملف الشخصي للمستخدم"
+
+msgid "Name"
+msgstr "الاسم"
+
+msgid "Member since"
+msgstr "عضو منذ"
+
+msgid "Admin"
+msgstr "مدير"
+

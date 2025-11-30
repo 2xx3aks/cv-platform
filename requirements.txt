@@ -1,0 +1,24 @@
+# Django
+Django>=4.2.0,<5.0.0
+
+# Database - MongoDB (direct connection via pymongo)
+# Note: Django ORM uses SQLite, CV profiles use MongoDB directly
+pymongo>=4.6.0
+
+# CV Processing
+PyPDF2>=3.0.0
+python-docx>=1.1.0
+
+# Cohere API (Chat API - Generate API was deprecated)
+cohere>=5.0.0
+polib>=1.1.0
+
+# Pydantic
+pydantic>=2.0.0
+
+# Environment variables
+python-dotenv>=1.0.0
+
+# Additional utilities
+python-multipart>=0.0.6
+

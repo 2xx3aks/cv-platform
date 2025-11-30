@@ -1,0 +1,55 @@
+{% extends 'base.html' %}
+{% load i18n %}
+{% load static %}
+
+{% block title %}{% trans "Login" %} - {% trans "KU Career Portal" %}{% endblock %}
+
+{% block content %}
+<div class="page-header">
+    <div class="container">
+        <div class="text-center mb-3">
+            <img src="{% static 'images/kuwait-university-logo.png' %}" alt="Kuwait University" style="width: 70px; height: 70px; object-fit: contain;">
+        </div>
+        <h1><i class="bi bi-box-arrow-in-right"></i> {% trans "Welcome Back" %}</h1>
+        <p class="mb-0 mt-2" style="opacity: 0.9;">{% trans "Login to access your account" %}</p>
+    </div>
+</div>
+
+<div class="row justify-content-center fade-in">
+    <div class="col-md-5 col-lg-4">
+        <div class="card">
+            <div class="card-header" style="background: var(--primary-gradient); color: white;">
+                <h4 class="mb-0"><i class="bi bi-box-arrow-in-right"></i> {% trans "Login" %}</h4>
+            </div>
+            <div class="card-body p-4">
+                <form method="post">
+                    {% csrf_token %}
+                    <div class="mb-4">
+                        <label for="id_username" class="form-label fw-bold">
+                            <i class="bi bi-person-fill text-primary"></i> {% trans "Username" %}
+                        </label>
+                        <input type="text" class="form-control form-control-lg" id="id_username" name="username" required placeholder="{% trans 'Enter your username' %}">
+                    </div>
+                    <div class="mb-4">
+                        <label for="id_password" class="form-label fw-bold">
+                            <i class="bi bi-lock-fill text-primary"></i> {% trans "Password" %}
+                        </label>
+                        <input type="password" class="form-control form-control-lg" id="id_password" name="password" required placeholder="{% trans 'Enter your password' %}">
+                    </div>
+                    <button type="submit" class="btn btn-primary w-100 btn-lg">
+                        <i class="bi bi-box-arrow-in-right"></i> {% trans "Login" %}
+                    </button>
+                </form>
+                <hr class="my-4">
+                <p class="text-center mb-0">
+                    {% trans "Don't have an account?" %} 
+                    <a href="{% url 'accounts:register' %}" class="text-decoration-none fw-bold" style="color: #667eea;">
+                        <i class="bi bi-person-plus-fill"></i> {% trans "Register here" %}
+                    </a>
+                </p>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}
+

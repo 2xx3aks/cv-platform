@@ -1,0 +1,367 @@
+{% extends 'base.html' %}
+{% load i18n %}
+{% load static %}
+
+{% block title %}{% trans "Admin Dashboard" %} - {% trans "KU Career Portal" %}{% endblock %}
+
+{% block extra_css %}
+<script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.0/dist/chart.umd.min.js"></script>
+<style>
+    .chart-container {
+        position: relative;
+        height: 300px;
+        margin: 1rem 0;
+    }
+    .chart-container-large {
+        height: 400px;
+    }
+</style>
+{% endblock %}
+
+{% block content %}
+<div class="page-header">
+    <div class="container">
+        <div class="text-center mb-3">
+            <img src="{% static 'images/kuwait-university-logo.png' %}" alt="Kuwait University" style="width: 60px; height: 60px; object-fit: contain;"/>
+        </div>
+        <h1>{% trans "Admin Dashboard" %}</h1>
+        <p class="mb-0 mt-2" style="opacity: 0.9;">{% trans "Platform analytics and management" %}</p>
+    </div>
+</div>
+
+<div class="row fade-in">
+    <div class="col-md-3 mb-4">
+        <div class="stat-card">
+            <i class="bi bi-people-fill stat-icon"></i>
+            <div class="stat-value">{{ total_students }}</div>
+            <div class="stat-label">{% trans "Total Students" %}</div>
+        </div>
+    </div>
+    <div class="col-md-3 mb-4">
+        <div class="stat-card">
+            <i class="bi bi-building-fill stat-icon"></i>
+            <div class="stat-value">{{ total_companies }}</div>
+            <div class="stat-label">{% trans "Total Companies" %}</div>
+        </div>
+    </div>
+    <div class="col-md-3 mb-4">
+        <div class="stat-card">
+            <i class="bi bi-file-earmark-person-fill stat-icon"></i>
+            <div class="stat-value">{{ total_profiles }}</div>
+            <div class="stat-label">{% trans "CV Profiles" %}</div>
+        </div>
+    </div>
+    <div class="col-md-3 mb-4">
+        <div class="stat-card">
+            <i class="bi bi-star-fill stat-icon"></i>
+            <div class="stat-value">{{ avg_gpa }}</div>
+            <div class="stat-label">{% trans "Average GPA" %}</div>
+        </div>
+    </div>
+</div>
+
+<div class="row mt-4 fade-in">
+    <div class="col-md-6 mb-4">
+        <div class="card">
+            <div class="card-header" style="background: var(--primary-gradient); color: white;">
+                <h5 class="mb-0"><i class="bi bi-pie-chart-fill"></i> {% trans "Users Distribution" %}</h5>
+            </div>
+            <div class="card-body">
+                <div class="chart-container">
+                    <canvas id="usersChart"></canvas>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="col-md-6 mb-4">
+        <div class="card">
+            <div class="card-header" style="background: var(--info-gradient); color: white;">
+                <h5 class="mb-0"><i class="bi bi-book-fill"></i> {% trans "Majors Distribution" %}</h5>
+            </div>
+            <div class="card-body">
+                <div class="chart-container">
+                    <canvas id="majorsChart"></canvas>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="row mt-4 fade-in">
+    <div class="col-md-8 mb-4">
+        <div class="card">
+            <div class="card-header" style="background: var(--primary-gradient); color: white;">
+                <h5 class="mb-0"><i class="bi bi-bar-chart-fill"></i> {% trans "Top Skills" %}</h5>
+            </div>
+            <div class="card-body">
+                <div class="chart-container chart-container-large">
+                    <canvas id="skillsChart"></canvas>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="col-md-4 mb-4">
+        <div class="card">
+            <div class="card-header" style="background: var(--success-gradient); color: white;">
+                <h5 class="mb-0"><i class="bi bi-star-fill"></i> {% trans "GPA Distribution" %}</h5>
+            </div>
+            <div class="card-body">
+                <div class="chart-container">
+                    <canvas id="gpaChart"></canvas>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="row mt-4 fade-in">
+    <div class="col-md-6 mb-4">
+        <div class="card">
+            <div class="card-header" style="background: var(--primary-gradient); color: white;">
+                <h5 class="mb-0"><i class="bi bi-tags-fill"></i> {% trans "Most Common Skills" %} ({% trans "List" %})</h5>
+            </div>
+            <div class="card-body">
+                {% if most_common_skills %}
+                    <div class="list-group list-group-flush">
+                        {% for skill, count in most_common_skills %}
+                            <div class="list-group-item d-flex justify-content-between align-items-center border-0 px-0">
+                                <span class="fw-semibold">{{ skill }}</span>
+                                <span class="badge bg-primary rounded-pill px-3 py-2">{{ count }}</span>
+                            </div>
+                        {% endfor %}
+                    </div>
+                {% else %}
+                    <p class="text-muted text-center py-4">{% trans "No skills data available" %}</p>
+                {% endif %}
+            </div>
+        </div>
+    </div>
+    <div class="col-md-6 mb-4">
+        <div class="card">
+            <div class="card-header" style="background: var(--info-gradient); color: white;">
+                <h5 class="mb-0"><i class="bi bi-book-fill"></i> {% trans "Majors Distribution" %} ({% trans "List" %})</h5>
+            </div>
+            <div class="card-body">
+                {% if majors_distribution %}
+                    <div class="list-group list-group-flush">
+                        {% for major, count in majors_distribution.items %}
+                            <div class="list-group-item d-flex justify-content-between align-items-center border-0 px-0">
+                                <span class="fw-semibold">{{ major|default:"N/A" }}</span>
+                                <span class="badge bg-info rounded-pill px-3 py-2">{{ count }}</span>
+                            </div>
+                        {% endfor %}
+                    </div>
+                {% else %}
+                    <p class="text-muted text-center py-4">{% trans "No majors data available" %}</p>
+                {% endif %}
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="row mt-4 fade-in">
+    <div class="col-12">
+        <div class="card">
+            <div class="card-header" style="background: var(--warning-gradient); color: white;">
+                <h5 class="mb-0"><i class="bi bi-shield-exclamation-fill"></i> {% trans "Admin Actions" %}</h5>
+            </div>
+            <div class="card-body">
+                <div class="alert alert-warning border-0 shadow-sm">
+                    <i class="bi bi-exclamation-triangle-fill"></i> 
+                    <strong>{% trans "Warning" %}:</strong> {% trans "Admin actions are permanent and cannot be undone." %}
+                </div>
+                <div class="d-grid gap-2 d-md-flex">
+                    <a href="{% url 'cv_extraction:admin_users' %}" class="btn btn-primary flex-fill">
+                        <i class="bi bi-people-fill"></i> {% trans "Manage Users" %}
+                    </a>
+                    <a href="/admin/" class="btn btn-secondary flex-fill">
+                        <i class="bi bi-gear-fill"></i> {% trans "Django Admin Panel" %}
+                    </a>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<script>
+// Chart.js configuration
+const chartColors = {
+    primary: ['#2563eb', '#1e40af', '#3b82f6', '#60a5fa', '#93c5fd', '#dbeafe'],
+    success: ['#0ea5e9', '#0284c7', '#06b6d4', '#0891b2'],
+    info: ['#06b6d4', '#0891b2', '#0ea5e9', '#0284c7'],
+    warning: ['#3b82f6', '#2563eb', '#1e40af']
+};
+
+// Users Distribution Pie Chart
+const usersCtx = document.getElementById('usersChart').getContext('2d');
+new Chart(usersCtx, {
+    type: 'doughnut',
+    data: {
+        labels: {{ users_distribution.labels|safe }},
+        datasets: [{
+            data: {{ users_distribution.data|safe }},
+            backgroundColor: chartColors.primary,
+            borderWidth: 2,
+            borderColor: '#ffffff'
+        }]
+    },
+    options: {
+        responsive: true,
+        maintainAspectRatio: false,
+        plugins: {
+            legend: {
+                position: 'bottom',
+                labels: {
+                    padding: 15,
+                    font: {
+                        size: 12
+                    }
+                }
+            },
+            tooltip: {
+                callbacks: {
+                    label: function(context) {
+                        let label = context.label || '';
+                        if (label) {
+                            label += ': ';
+                        }
+                        label += context.parsed + ' users';
+                        return label;
+                    }
+                }
+            }
+        }
+    }
+});
+
+// Majors Distribution Pie Chart
+const majorsCtx = document.getElementById('majorsChart').getContext('2d');
+new Chart(majorsCtx, {
+    type: 'pie',
+    data: {
+        labels: {{ majors_chart_data.labels|safe }},
+        datasets: [{
+            data: {{ majors_chart_data.data|safe }},
+            backgroundColor: chartColors.info,
+            borderWidth: 2,
+            borderColor: '#ffffff'
+        }]
+    },
+    options: {
+        responsive: true,
+        maintainAspectRatio: false,
+        plugins: {
+            legend: {
+                position: 'bottom',
+                labels: {
+                    padding: 15,
+                    font: {
+                        size: 11
+                    }
+                }
+            }
+        }
+    }
+});
+
+// Top Skills Bar Chart
+const skillsCtx = document.getElementById('skillsChart').getContext('2d');
+new Chart(skillsCtx, {
+    type: 'bar',
+    data: {
+        labels: {{ skills_chart_data.labels|safe }},
+        datasets: [{
+            label: '{% trans "Number of Students" %}',
+            data: {{ skills_chart_data.data|safe }},
+            backgroundColor: chartColors.primary[0],
+            borderColor: chartColors.primary[1],
+            borderWidth: 2,
+            borderRadius: 8
+        }]
+    },
+    options: {
+        responsive: true,
+        maintainAspectRatio: false,
+        plugins: {
+            legend: {
+                display: false
+            },
+            tooltip: {
+                callbacks: {
+                    label: function(context) {
+                        return context.parsed.y + ' {% trans "students" %}';
+                    }
+                }
+            }
+        },
+        scales: {
+            y: {
+                beginAtZero: true,
+                ticks: {
+                    stepSize: 1
+                },
+                grid: {
+                    color: 'rgba(37, 99, 235, 0.1)'
+                }
+            },
+            x: {
+                grid: {
+                    display: false
+                }
+            }
+        }
+    }
+});
+
+// GPA Distribution Bar Chart
+const gpaCtx = document.getElementById('gpaChart').getContext('2d');
+new Chart(gpaCtx, {
+    type: 'bar',
+    data: {
+        labels: {{ gpa_distribution.labels|safe }},
+        datasets: [{
+            label: '{% trans "Number of Students" %}',
+            data: {{ gpa_distribution.data|safe }},
+            backgroundColor: chartColors.success,
+            borderColor: chartColors.success[1],
+            borderWidth: 2,
+            borderRadius: 8
+        }]
+    },
+    options: {
+        responsive: true,
+        maintainAspectRatio: false,
+        indexAxis: 'y',
+        plugins: {
+            legend: {
+                display: false
+            },
+            tooltip: {
+                callbacks: {
+                    label: function(context) {
+                        return context.parsed.x + ' {% trans "students" %}';
+                    }
+                }
+            }
+        },
+        scales: {
+            x: {
+                beginAtZero: true,
+                ticks: {
+                    stepSize: 1
+                },
+                grid: {
+                    color: 'rgba(14, 165, 233, 0.1)'
+                }
+            },
+            y: {
+                grid: {
+                    display: false
+                }
+            }
+        }
+    }
+});
+</script>
+{% endblock %}
+

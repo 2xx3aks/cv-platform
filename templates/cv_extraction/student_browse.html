@@ -1,0 +1,85 @@
+{% extends 'base.html' %}
+{% load i18n %}
+{% load static %}
+
+{% block title %}{% trans "Browse Students" %} - {% trans "KU Career Portal" %}{% endblock %}
+
+{% block content %}
+<div class="page-header">
+    <div class="container">
+        <div class="text-center mb-3">
+            <img src="{% static 'images/kuwait-university-logo.png' %}" alt="Kuwait University" style="width: 60px; height: 60px; object-fit: contain;"/>
+        </div>
+        <h1><i class="bi bi-people-fill"></i> {% trans "Browse Other Students" %}</h1>
+    </div>
+</div>
+
+<div class="row">
+    {% if profiles %}
+        {% for profile in profiles %}
+            <div class="col-md-6 mb-3">
+                <div class="card">
+                    <div class="card-body">
+                        <h5>
+                            {% if profile.user %}
+                                <a href="{% url 'cv_extraction:student_profile_view' profile.user_id %}" class="text-decoration-none">
+                                    {{ profile.full_name|default:profile.user.username|default:"Unknown" }}
+                                </a>
+                            {% else %}
+                                {{ profile.full_name|default:"Unknown" }}
+                            {% endif %}
+                        </h5>
+                        <p class="text-muted mb-2">
+                            <i class="bi bi-envelope"></i> {{ profile.email|default:"Not provided" }}
+                        </p>
+                        {% if profile.major %}
+                        <p class="mb-2">
+                            <i class="bi bi-book"></i> <strong>{% trans "Major" %}:</strong> {{ profile.major }}
+                        </p>
+                        {% endif %}
+                        {% if profile.gpa %}
+                        <p class="mb-2">
+                            <span class="badge bg-success">{% trans "GPA" %}: {{ profile.gpa }}</span>
+                        </p>
+                        {% endif %}
+                        {% if profile.skills %}
+                        <div class="mb-2">
+                            {% for skill in profile.skills|slice:":5" %}
+                                <span class="badge bg-secondary skill-badge">{{ skill }}</span>
+                            {% endfor %}
+                            {% if profile.skills|length > 5 %}
+                                <span class="text-muted">+{{ profile.skills|length|add:"-5" }} {% trans "more" %}</span>
+                            {% endif %}
+                        </div>
+                        {% endif %}
+                        {% if profile.is_student %}
+                            <a href="{% url 'cv_extraction:student_profile_view' profile.user_id %}" class="btn btn-primary btn-sm">
+                                <i class="bi bi-eye"></i> {% trans "View Profile" %}
+                            </a>
+                        {% elif profile.user %}
+                            <span class="badge bg-warning text-dark mb-2">{% trans "Not a student account" %}</span>
+                            <br>
+                            <span class="text-muted small">{% trans "This profile belongs to a" %} {{ profile.user.get_role_display|lower }}.</span>
+                        {% else %}
+                            <span class="badge bg-secondary mb-2">{% trans "User account not found" %}</span>
+                            <br>
+                            <span class="text-muted small">{% trans "CV profile exists but user account is missing." %}</span>
+                        {% endif %}
+                    </div>
+                </div>
+            </div>
+        {% endfor %}
+    {% else %}
+        <div class="col-12">
+            <div class="card text-center empty-state">
+                <div class="card-body">
+                    <i class="bi bi-inbox" style="font-size: 5rem; color: #ddd;"></i>
+                    <h4 class="mt-3">{% trans "No Other Students Found" %}</h4>
+                    <p class="text-muted">{% trans "There are no other students with CV profiles yet." %}</p>
+                </div>
+            </div>
+        </div>
+    {% endif %}
+</div>
+{% endblock %}
+

@@ -1,0 +1,210 @@
+{% extends 'base.html' %}
+{% load i18n %}
+{% load static %}
+
+{% block title %}{% trans "Compare Students" %} - {% trans "KU Career Portal" %}{% endblock %}
+
+{% block content %}
+<div class="page-header">
+    <div class="container">
+        <div class="text-center mb-3">
+            <img src="{% static 'images/kuwait-university-logo.png' %}" alt="Kuwait University" style="width: 60px; height: 60px; object-fit: contain;"/>
+        </div>
+        <h1><i class="bi bi-bar-chart-fill"></i> {% trans "Compare Students" %}</h1>
+    </div>
+</div>
+
+{% if comparison_data %}
+    <div class="row mb-3">
+        <div class="col-12">
+            <div class="alert alert-info">
+                <i class="bi bi-info-circle"></i> {% trans "Comparing" %} {{ comparison_data|length }} {% trans "student(s)" %}
+            </div>
+        </div>
+    </div>
+    
+    <!-- Comparison Table View -->
+    <div class="card mb-4">
+        <div class="card-header" style="background: var(--primary-gradient); color: white;">
+            <h5 class="mb-0"><i class="bi bi-table"></i> {% trans "Side-by-Side Comparison" %}</h5>
+        </div>
+        <div class="card-body">
+            <div class="table-responsive">
+                <table class="table table-bordered table-hover">
+                    <thead>
+                        <tr>
+                            <th>{% trans "Criteria" %}</th>
+                            {% for data in comparison_data %}
+                                <th class="text-center {% if data.is_strongest %}table-success{% endif %}">
+                                    {{ data.profile.full_name|default:"Unknown" }}
+                                    {% if data.is_strongest %}
+                                        <span class="badge bg-success">🏆 {% trans "Best" %}</span>
+                                    {% endif %}
+                                </th>
+                            {% endfor %}
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <th>{% trans "Full Name" %}</th>
+                            {% for data in comparison_data %}
+                                <td>{{ data.profile.full_name|default:"N/A" }}</td>
+                            {% endfor %}
+                        </tr>
+                        <tr>
+                            <th>{% trans "Email" %}</th>
+                            {% for data in comparison_data %}
+                                <td>{{ data.profile.email|default:"N/A" }}</td>
+                            {% endfor %}
+                        </tr>
+                        <tr>
+                            <th>{% trans "Major" %}</th>
+                            {% for data in comparison_data %}
+                                <td>{{ data.profile.major|default:"N/A" }}</td>
+                            {% endfor %}
+                        </tr>
+                        <tr>
+                            <th>{% trans "GPA" %}</th>
+                            {% for data in comparison_data %}
+                                <td>
+                                    <span class="badge bg-success">{{ data.gpa|default:"N/A" }}</span>
+                                </td>
+                            {% endfor %}
+                        </tr>
+                        <tr>
+                            <th>{% trans "Skills Count" %}</th>
+                            {% for data in comparison_data %}
+                                <td>{{ data.skills_count }}</td>
+                            {% endfor %}
+                        </tr>
+                        <tr>
+                            <th>{% trans "Experience Count" %}</th>
+                            {% for data in comparison_data %}
+                                <td>{{ data.experience_count }}</td>
+                            {% endfor %}
+                        </tr>
+                        <tr>
+                            <th>{% trans "Education Count" %}</th>
+                            {% for data in comparison_data %}
+                                <td>{{ data.education_count }}</td>
+                            {% endfor %}
+                        </tr>
+                        <tr>
+                            <th>{% trans "Certifications Count" %}</th>
+                            {% for data in comparison_data %}
+                                <td>{{ data.certifications_count }}</td>
+                            {% endfor %}
+                        </tr>
+                        <tr>
+                            <th>{% trans "Overall Score" %}</th>
+                            {% for data in comparison_data %}
+                                <td>
+                                    <span class="badge bg-info">{{ data.score|floatformat:1 }}%</span>
+                                </td>
+                            {% endfor %}
+                        </tr>
+                        <tr>
+                            <th>{% trans "Skills" %}</th>
+                            {% for data in comparison_data %}
+                                <td>
+                                    {% for skill in data.profile.skills|slice:":10" %}
+                                        <span class="badge bg-secondary skill-badge">{{ skill }}</span>
+                                    {% endfor %}
+                                    {% if data.profile.skills|length > 10 %}
+                                        <span class="text-muted">+{{ data.profile.skills|length|add:"-10" }} {% trans "more" %}</span>
+                                    {% endif %}
+                                </td>
+                            {% endfor %}
+                        </tr>
+                        <tr>
+                            <th>{% trans "Actions" %}</th>
+                            {% for data in comparison_data %}
+                                <td>
+                                    <a href="{% url 'cv_extraction:student_profile_view' data.profile.user_id %}" class="btn btn-primary btn-sm">
+                                        <i class="bi bi-eye"></i> {% trans "View Profile" %}
+                                    </a>
+                                </td>
+                            {% endfor %}
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+    
+    <!-- Card View (Alternative) -->
+    <div class="row">
+        {% for data in comparison_data %}
+            <div class="col-md-6 col-lg-4 mb-3">
+                <div class="card h-100 {% if data.is_strongest %}border-success border-2{% endif %}">
+                    <div class="card-header {% if data.is_strongest %}bg-success text-white{% else %}bg-primary text-white{% endif %}">
+                        <h5 class="mb-0">
+                            {{ data.profile.full_name|default:"Unknown" }}
+                            {% if data.is_strongest %}
+                                <span class="badge bg-light text-success float-end">🏆 {% trans "Best" %}</span>
+                            {% endif %}
+                        </h5>
+                    </div>
+                    <div class="card-body">
+                        <p><strong>{% trans "GPA" %}:</strong> <span class="badge bg-success">{{ data.gpa|default:"N/A" }}</span></p>
+                        <p><strong>{% trans "Score" %}:</strong> <span class="badge bg-info">{{ data.score|floatformat:1 }}%</span></p>
+                        <p><strong>{% trans "Skills" %}:</strong> {{ data.skills_count }}</p>
+                        <p><strong>{% trans "Experience" %}:</strong> {{ data.experience_count }}</p>
+                        <p><strong>{% trans "Education" %}:</strong> {{ data.education_count }}</p>
+                        <p><strong>{% trans "Certifications" %}:</strong> {{ data.certifications_count }}</p>
+                        <a href="{% url 'cv_extraction:student_profile_view' data.profile.user_id %}" class="btn btn-primary w-100 mt-2">
+                            <i class="bi bi-eye"></i> {% trans "View Full Profile" %}
+                        </a>
+                    </div>
+                </div>
+            </div>
+        {% endfor %}
+    </div>
+    
+    <div class="row mt-3">
+        <div class="col-12">
+            <a href="{% url 'cv_extraction:compare_students' %}" class="btn btn-secondary">
+                <i class="bi bi-arrow-left"></i> {% trans "Compare Different Students" %}
+            </a>
+        </div>
+    </div>
+{% else %}
+    <div class="row">
+        <div class="col-md-10 mx-auto">
+            <div class="card">
+                <div class="card-header" style="background: var(--primary-gradient); color: white;">
+                    <h5 class="mb-0"><i class="bi bi-bar-chart-fill"></i> {% trans "Select Students to Compare" %}</h5>
+                </div>
+                <div class="card-body">
+                    <form method="post">
+                        {% csrf_token %}
+                        <div class="mb-3">
+                            <label class="form-label">{% trans "Select 2 or more students to compare" %}:</label>
+                            <div class="form-check-group" style="max-height: 400px; overflow-y: auto; border: 1px solid #dee2e6; padding: 15px; border-radius: 5px;">
+                                {% for choice in form.student_ids %}
+                                    <div class="form-check mb-2">
+                                        {{ choice.tag }}
+                                        <label class="form-check-label" for="{{ choice.id_for_label }}">
+                                            {{ choice.choice_label }}
+                                        </label>
+                                    </div>
+                                {% empty %}
+                                    <p class="text-muted">{% trans "No students with CV profiles available for comparison." %}</p>
+                                {% endfor %}
+                            </div>
+                            {% if form.student_ids.errors %}
+                                <div class="text-danger mt-2">{{ form.student_ids.errors }}</div>
+                            {% endif %}
+                            <small class="form-text text-muted">{{ form.student_ids.help_text }}</small>
+                        </div>
+                        <button type="submit" class="btn btn-primary w-100">
+                            <i class="bi bi-bar-chart-fill"></i> {% trans "Compare Students" %}
+                        </button>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+{% endif %}
+{% endblock %}
+

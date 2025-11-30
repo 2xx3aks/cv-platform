@@ -1,0 +1,48 @@
+{% extends 'base.html' %}
+{% load i18n %}
+{% load static %}
+
+{% block title %}{% trans "Profile" %} - KU Career Portal{% endblock %}
+
+{% block content %}
+<div class="page-header">
+    <div class="container">
+        <div class="text-center mb-3">
+            <img src="{% static 'images/kuwait-university-logo.png' %}" alt="Kuwait University" style="width: 60px; height: 60px; object-fit: contain;"/>
+        </div>
+        <h1><i class="bi bi-person-fill"></i> {% trans "User Profile" %}</h1>
+    </div>
+</div>
+
+<div class="row">
+    <div class="col-md-8 mx-auto">
+        <div class="card">
+            <div class="card-header" style="background: var(--primary-gradient); color: white;">
+                <h4 class="mb-0"><i class="bi bi-person-fill"></i> {% trans "User Profile" %}</h4>
+            </div>
+            <div class="card-body">
+                <div class="row">
+                    <div class="col-md-6">
+                        <p><strong>{% trans "Username" %}:</strong> {{ user.username }}</p>
+                        <p><strong>{% trans "Email" %}:</strong> {{ user.email }}</p>
+                        {% if user.first_name or user.last_name %}
+                        <p><strong>{% trans "Name" %}:</strong> {{ user.first_name }} {{ user.last_name }}</p>
+                        {% endif %}
+                        <p><strong>{% trans "Role" %}:</strong> 
+                            <span class="badge bg-primary">{{ user.get_role_display }}</span>
+                        </p>
+                        <p><strong>{% trans "Member since" %}:</strong> {{ user.date_joined|date:"F d, Y" }}</p>
+                    </div>
+                </div>
+                <hr>
+                <div class="d-flex justify-content-end">
+                    <a href="{% url 'accounts:edit_profile' %}" class="btn btn-primary">
+                        <i class="bi bi-pencil-square"></i> {% trans "Edit Profile" %}
+                    </a>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}
+

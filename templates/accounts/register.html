@@ -1,0 +1,93 @@
+{% extends 'base.html' %}
+{% load i18n %}
+{% load static %}
+
+{% block title %}{% trans "Register" %} - {% trans "KU Career Portal" %}{% endblock %}
+
+{% block content %}
+<div class="page-header">
+    <div class="container">
+        <div class="text-center mb-3">
+            <img src="{% static 'images/kuwait-university-logo.png' %}" alt="Kuwait University" style="width: 70px; height: 70px; object-fit: contain;">
+        </div>
+        <h1><i class="bi bi-person-plus-fill"></i> {% trans "Create Account" %}</h1>
+        <p class="mb-0 mt-2" style="opacity: 0.9;">{% trans "Join our platform and showcase your skills" %}</p>
+    </div>
+</div>
+
+<div class="row justify-content-center fade-in">
+    <div class="col-md-6 col-lg-5">
+        <div class="card">
+            <div class="card-header" style="background: var(--success-gradient); color: white;">
+                <h4 class="mb-0"><i class="bi bi-person-plus-fill"></i> {% trans "Register" %}</h4>
+            </div>
+            <div class="card-body p-4">
+                <form method="post">
+                    {% csrf_token %}
+                    <div class="mb-3">
+                        <label for="id_username" class="form-label fw-bold">
+                            <i class="bi bi-person-fill text-primary"></i> {% trans "Username" %}
+                        </label>
+                        <input type="text" class="form-control form-control-lg" id="id_username" name="username" required placeholder="{% trans 'Choose a username' %}">
+                        {% if form.username.errors %}
+                            <div class="text-danger mt-2">{{ form.username.errors }}</div>
+                        {% endif %}
+                    </div>
+                    <div class="mb-3">
+                        <label for="id_email" class="form-label fw-bold">
+                            <i class="bi bi-envelope-fill text-primary"></i> {% trans "Email" %}
+                        </label>
+                        <input type="email" class="form-control form-control-lg" id="id_email" name="email" required placeholder="{% trans 'Enter your email' %}">
+                        {% if form.email.errors %}
+                            <div class="text-danger mt-2">{{ form.email.errors }}</div>
+                        {% endif %}
+                    </div>
+                    <div class="mb-3">
+                        <label for="id_role" class="form-label fw-bold">
+                            <i class="bi bi-person-badge-fill text-primary"></i> {% trans "Role" %}
+                        </label>
+                        <select class="form-select form-select-lg" id="id_role" name="role" required>
+                            <option value="">{% trans "Select a role" %}</option>
+                            <option value="student">{% trans "Student" %}</option>
+                            <option value="company">{% trans "Company" %}</option>
+                        </select>
+                        <small class="form-text text-muted mt-2 d-block">{{ form.role.help_text }}</small>
+                        {% if form.role.errors %}
+                            <div class="text-danger mt-2">{{ form.role.errors }}</div>
+                        {% endif %}
+                    </div>
+                    <div class="mb-3">
+                        <label for="id_password1" class="form-label fw-bold">
+                            <i class="bi bi-lock-fill text-primary"></i> {% trans "Password" %}
+                        </label>
+                        <input type="password" class="form-control form-control-lg" id="id_password1" name="password1" required placeholder="{% trans 'Enter your password' %}">
+                        {% if form.password1.errors %}
+                            <div class="text-danger mt-2">{{ form.password1.errors }}</div>
+                        {% endif %}
+                    </div>
+                    <div class="mb-4">
+                        <label for="id_password2" class="form-label fw-bold">
+                            <i class="bi bi-lock-fill text-primary"></i> {% trans "Confirm Password" %}
+                        </label>
+                        <input type="password" class="form-control form-control-lg" id="id_password2" name="password2" required placeholder="{% trans 'Confirm your password' %}">
+                        {% if form.password2.errors %}
+                            <div class="text-danger mt-2">{{ form.password2.errors }}</div>
+                        {% endif %}
+                    </div>
+                    <button type="submit" class="btn btn-success w-100 btn-lg">
+                        <i class="bi bi-person-plus-fill"></i> {% trans "Register" %}
+                    </button>
+                </form>
+                <hr class="my-4">
+                <p class="text-center mb-0">
+                    {% trans "Already have an account?" %} 
+                    <a href="{% url 'accounts:login' %}" class="text-decoration-none fw-bold" style="color: #4facfe;">
+                        <i class="bi bi-box-arrow-in-right"></i> {% trans "Login here" %}
+                    </a>
+                </p>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}
+
