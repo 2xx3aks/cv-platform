@@ -14,9 +14,9 @@ BASE_DIR = Path(__file__).resolve().parent.parent
 SECRET_KEY = os.getenv('DJANGO_SECRET_KEY', 'django-insecure-change-this-in-production')
 
 # SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = os.getenv('DJANGO_DEBUG', 'False') == 'True'
+DEBUG = True
 
-ALLOWED_HOSTS = ['cv-platform.onrender.com']
+ALLOWED_HOSTS = ['*']
 
 # Application definition
 INSTALLED_APPS = [
@@ -71,7 +71,7 @@ WSGI_APPLICATION = 'cv_platform.wsgi.application'
 DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.sqlite3',
-        'NAME': BASE_DIR / 'db.sqlite3',  # Store in project root, not cv_platform folder
+        'NAME': BASE_DIR.parent / 'db.sqlite3',  # Store in project root, not cv_platform folder
     }
 }
 
@@ -132,9 +132,10 @@ LOGIN_REDIRECT_URL = '/'  # Will be overridden by custom login view
 LOGOUT_REDIRECT_URL = '/accounts/login/'  # Redirect to login page after logout
 
 # MongoDB Configuration
-MONGODB_URI = os.getenv('MONGODB_URI', 'mongodb+srv://aisha12dl_db_user:DSQpumsh2LBDdw98@cv-platform.wmyawiy.mongodb.net/cv_project?retryWrites=true&w=majority')
+MONGODB_URI = os.getenv('MONGODB_URI', 'mongodb://localhost:27017/')
 MONGODB_DB_NAME = os.getenv('MONGODB_DB_NAME', 'cv_platform')
 
 # Cohere API Configuration
 COHERE_API_KEY = os.getenv('COHERE_API_KEY', '')
+
 
