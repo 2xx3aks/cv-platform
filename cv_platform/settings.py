@@ -14,9 +14,9 @@ BASE_DIR = Path(__file__).resolve().parent.parent
 SECRET_KEY = os.getenv('DJANGO_SECRET_KEY', 'django-insecure-change-this-in-production')
 
 # SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = True
+DEBUG = os.getenv('DJANGO_DEBUG', 'False') == 'True'
 
-ALLOWED_HOSTS = ['*']
+ALLOWED_HOSTS = ['cv-platform.onrender.com']
 
 # Application definition
 INSTALLED_APPS = [
@@ -71,7 +71,7 @@ WSGI_APPLICATION = 'cv_platform.wsgi.application'
 DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.sqlite3',
-        'NAME': BASE_DIR.parent / 'db.sqlite3',  # Store in project root, not cv_platform folder
+        'NAME': BASE_DIR / 'db.sqlite3',  # Store in project root, not cv_platform folder
     }
 }
 
