@@ -132,7 +132,7 @@ LOGIN_REDIRECT_URL = '/'  # Will be overridden by custom login view
 LOGOUT_REDIRECT_URL = '/accounts/login/'  # Redirect to login page after logout
 
 # MongoDB Configuration
-MONGODB_URI = os.getenv('MONGODB_URI', 'mongodb://localhost:27017/')
+MONGODB_URI = os.getenv('MONGODB_URI', 'mongodb+srv://aisha12dl_db_user:DSQpumsh2LBDdw98@cv-platform.wmyawiy.mongodb.net/cv_project?retryWrites=true&w=majority')
 MONGODB_DB_NAME = os.getenv('MONGODB_DB_NAME', 'cv_platform')
 
 # Cohere API Configuration
