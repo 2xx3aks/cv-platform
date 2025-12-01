@@ -10,11 +10,16 @@ load_dotenv()
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent
 
+import environ
+
+env = environ.Env()
+environ.Env.read_env()
+
 # SECURITY WARNING: keep the secret key used in production secret!
 SECRET_KEY = os.getenv('DJANGO_SECRET_KEY', 'django-insecure-change-this-in-production')
 
 # SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = True
+DEBUG = False
 
 ALLOWED_HOSTS = ['*']
 
@@ -70,11 +75,18 @@ WSGI_APPLICATION = 'cv_platform.wsgi.application'
 # Database Configuration
 # Django ORM uses SQLite for user authentication and admin
 # CV profiles are stored in MongoDB directly via pymongo (see mongodb_utils.py)
+"""""
 DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.sqlite3',
         'NAME': BASE_DIR.parent / 'db.sqlite3',  # Store in project root, not cv_platform folder
     }
+}"""
+
+import dj_database_url
+
+DATABASES = {
+    'default': dj_database_url.parse(env('DATABASE_URL')),
 }
 
 # Custom User Model
@@ -134,8 +146,8 @@ LOGIN_REDIRECT_URL = '/'  # Will be overridden by custom login view
 LOGOUT_REDIRECT_URL = '/accounts/login/'  # Redirect to login page after logout
 
 # MongoDB Configuration
-MONGODB_URI = os.getenv('MONGODB_URI', 'mongodb://localhost:27017/')
-MONGODB_DB_NAME = os.getenv('MONGODB_DB_NAME', 'cv_platform')
+#MONGODB_URI = os.getenv('MONGODB_URI', 'mongodb://localhost:27017/')
+#MONGODB_DB_NAME = os.getenv('MONGODB_DB_NAME', 'cv_platform')
 
 # Cohere API Configuration
 COHERE_API_KEY = os.getenv('COHERE_API_KEY', '')
