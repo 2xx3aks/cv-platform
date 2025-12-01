@@ -21,7 +21,7 @@ SECRET_KEY = os.getenv('DJANGO_SECRET_KEY', 'django-insecure-change-this-in-prod
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = False
 
-ALLOWED_HOSTS = ['*']
+ALLOWED_HOSTS = ['cv-platform.onrender.com']
 
 CSRF_TRUSTED_ORIGINS = ['https://cv-platform.onrender.com']
 
