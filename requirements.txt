@@ -34,3 +34,4 @@ sqlparse>=0.4.4
 tzdata>=2025.2
 cloudinary>=1.32.0
 django-cloudinary-storage>=0.3.0
+whitenoise>=6.4.0
