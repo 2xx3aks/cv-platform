@@ -2,7 +2,7 @@
 
 **Version:** 2.0  
 **Last Updated:** November 2025  
-**Platform Support:** Windows, macOS, Linux
+**Platform Support:**  macOS
 
 ---
 
@@ -11,9 +11,7 @@
 1. [Application Overview](#application-overview)
 2. [Prerequisites & Requirements](#prerequisites--requirements)
 3. [Installation Guide](#installation-guide)
-   - [Windows Setup](#windows-setup)
    - [macOS Setup](#macos-setup)
-   - [Linux Setup](#linux-setup)
 4. [Quick Start](#quick-start)
 5. [Features & User Roles](#features--user-roles)
 6. [Technology Stack](#technology-stack)
@@ -62,10 +60,9 @@ The **CV Platform** is a Django-based web application that automates CV processi
 - **Disk Space**: 2 GB free space
 - **Internet**: Required for Cohere API
 
-#### Supported Operating Systems
-- ✅ Windows 10/11 (64-bit)
+#### Supported Operating System
 - ✅ macOS 10.14+ (Intel or Apple Silicon)
-- ✅ Linux (Ubuntu 18.04+, Debian, etc.)
+
 
 ### Software Requirements
 
@@ -89,134 +86,6 @@ The **CV Platform** is a Django-based web application that automates CV processi
 ---
 
 ## Installation Guide
-
-### Windows Setup
-
-#### Step 1: Install Python
-
-1. Download Python 3.9+ from https://www.python.org/downloads/
-2. **Important**: Check the box "Add Python to PATH" during installation
-3. Open Command Prompt and verify:
-   ```cmd
-   python --version
-   ```
-   Should show: `Python 3.9.x` or higher
-
-#### Step 2: Install MongoDB
-
-**Option A: MongoDB Community Edition (Local)**
-1. Download from https://www.mongodb.com/try/download/community
-2. Run the installer
-3. Choose "MongoDB Community Server"
-4. Let it install as a service (recommended)
-5. Verify installation by opening Command Prompt:
-   ```cmd
-   mongosh
-   ```
-   Should open MongoDB shell
-
-**Option B: MongoDB Atlas (Cloud - No Installation)**
-1. Go to https://www.mongodb.com/cloud/atlas
-2. Create a free account
-3. Create a cluster
-4. Get your connection string (will use in `.env` file)
-5. No local installation needed
-
-#### Step 3: Clone or Download Project
-
-**Option A: Using Git**
-```cmd
-git clone <repository-url>
-cd cv-platform
-```
-
-**Option B: Manual Download**
-1. Download the project as ZIP
-2. Extract to desired location
-3. Open Command Prompt in extracted folder
-
-#### Step 4: Create Virtual Environment
-
-```cmd
-# Create virtual environment
-python -m venv venv
-
-# Activate virtual environment
-venv\Scripts\activate
-
-# You should see (venv) in your command prompt
-```
-
-#### Step 5: Install Dependencies
-
-```cmd
-# Ensure pip is up to date
-python -m pip install --upgrade pip
-
-# Install requirements
-pip install -r requirements.txt
-```
-
-**Expected output**: Successfully installed [number] packages
-
-#### Step 6: Configure Environment
-
-Create a `.env` file in the project root directory with:
-
-```env
-# Cohere API Key (get from https://cohere.com)
-COHERE_API_KEY=your-cohere-api-key-here
-
-# MongoDB Configuration
-MONGODB_URI=mongodb://localhost:27017/
-MONGODB_DB_NAME=cv_platform
-
-# Django Configuration
-DJANGO_SECRET_KEY=your-secret-key-here-change-in-production
-
-# Optional: For production
-DEBUG=False
-ALLOWED_HOSTS=localhost,127.0.0.1
-```
-
-**Important Notes:**
-- Never commit `.env` to version control
-- Keep your API key confidential
-- Change `DJANGO_SECRET_KEY` for production
-
-#### Step 7: Initialize Database
-
-```cmd
-# Navigate to cv_platform directory
-cd cv_platform
-
-# Create database tables
-python manage.py migrate --run-syncdb
-
-# Create superuser (admin account)
-python manage.py createsuperuser
-# Follow prompts to create admin account
-```
-
-#### Step 8: Run the Application
-
-```cmd
-# From cv_platform directory
-python manage.py runserver
-```
-
-**Alternative (from project root)**:
-```cmd
-python run_app.py
-```
-
-#### Step 9: Access the Application
-
-Open your browser and go to:
-- **Main Application**: http://127.0.0.1:8000/
-- **Admin Panel**: http://127.0.0.1:8000/admin/
-
----
 
 ### macOS Setup
 
@@ -353,99 +222,11 @@ python manage.py runserver
 
 ---
 
-### Linux Setup (Ubuntu/Debian)
-
-#### Step 1: Install Python
-
-```bash
-# Update package manager
-sudo apt update
-sudo apt upgrade -y
-
-# Install Python and dependencies
-sudo apt install python3 python3-venv python3-pip -y
-
-# Verify installation
-python3 --version
-```
-
-#### Step 2: Install MongoDB
-
-```bash
-# Install MongoDB
-sudo apt install -y mongodb
-
-# Start MongoDB service
-sudo systemctl start mongodb
-
-# Enable auto-start
-sudo systemctl enable mongodb
-
-# Verify
-mongosh
-```
-
-#### Step 3: Clone Project
-
-```bash
-git clone <repository-url>
-cd cv-platform
-```
-
-#### Step 4: Create Virtual Environment
-
-```bash
-python3 -m venv venv
-source venv/bin/activate
-```
-
-#### Step 5: Install Dependencies
-
-```bash
-python -m pip install --upgrade pip
-pip install -r requirements.txt
-```
-
-#### Step 6: Configure Environment
-
-```bash
-nano .env
-```
-
-Add:
-```env
-COHERE_API_KEY=your-api-key
-MONGODB_URI=mongodb://localhost:27017/
-MONGODB_DB_NAME=cv_platform
-DJANGO_SECRET_KEY=your-secret-key
-```
-
-#### Step 7: Initialize Database
-
-```bash
-cd cv_platform
-python manage.py migrate --run-syncdb
-python manage.py createsuperuser
-```
-
-#### Step 8: Run Application
-
-```bash
-python manage.py runserver
-```
-
----
-
 ## Quick Start
 
 ### Option 1: Automated Scripts (Easiest)
 
-#### Windows:
-```cmd
-run_app.bat
-```
-
-#### macOS/Linux:
+#### macOS:
 ```bash
 chmod +x INSTALL_AND_RUN.sh
 ./INSTALL_AND_RUN.sh
@@ -470,8 +251,7 @@ This script automatically:
 
 ```bash
 # Activate virtual environment
-# Windows: venv\Scripts\activate
-# macOS/Linux: source venv/bin/activate
+# macOS: source venv/bin/activate
 
 # Run migrations
 cd cv_platform
@@ -908,17 +688,10 @@ pymongo.errors.ConnectionFailure: connection closed
 ```
 
 **Solutions:**
-- **Windows**: 
-  - Check MongoDB Service: `Services` → find "MongoDB Server" → Start
-  - Or run: `mongod` in Command Prompt
-  
 - **macOS**: 
   - Run: `brew services start mongodb-community`
   - Or: `mongod`
   
-- **Linux**: 
-  - Run: `sudo systemctl start mongodb`
-  - Or: `sudo service mongodb start`
 
 - **Check connection string in .env**:
   ```env
@@ -958,8 +731,7 @@ cohere.errors.CohereAPIError: Invalid API key
 ```
 
 **Solutions:**
-- Windows: Run `venv\Scripts\activate`
-- macOS/Linux: Run `source venv/bin/activate`
+- macOS: Run `source venv/bin/activate`
 - Ensure you're in the correct directory
 - Recreate venv: `python -m venv venv`
 
@@ -976,8 +748,7 @@ Error: That port is already in use.
 python manage.py runserver 8001
 
 # Or kill process on port 8000
-# Windows: netstat -ano | findstr :8000
-# macOS/Linux: lsof -i :8000
+# macOS: lsof -i :8000
 ```
 
 #### 6. Static Files Not Loading
@@ -1027,7 +798,7 @@ python manage.py makemigrations accounts
 python manage.py migrate accounts
 ```
 
-#### 9. Permission Denied (macOS/Linux)
+#### 9. Permission Denied (macOS)
 
 **Error:**
 ```
@@ -1088,42 +859,6 @@ pip install -r requirements.txt
 
 ---
 
-## Advanced Topics
-
-### Running on Production
-
-#### Using Gunicorn
-
-```bash
-# Install Gunicorn
-pip install gunicorn
-
-# Run with Gunicorn (from cv_platform directory)
-gunicorn cv_platform.wsgi:application --bind 0.0.0.0:8000
-
-# With multiple workers
-gunicorn cv_platform.wsgi:application --workers 4 --bind 0.0.0.0:8000
-```
-
-#### Using Nginx
-
-Create `/etc/nginx/sites-available/cv-platform`:
-```nginx
-server {
-    listen 80;
-    server_name yourdomain.com;
-
-    location / {
-        proxy_pass http://127.0.0.1:8000;
-        proxy_set_header Host $host;
-        proxy_set_header X-Real-IP $remote_addr;
-    }
-
-    location /static/ {
-        alias /path/to/staticfiles/;
-    }
-}
-```
 
 #### Environment Checklist for Production
 

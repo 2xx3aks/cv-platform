@@ -40,12 +40,8 @@ A multi-role Django web application that uses Cohere AI to extract structured da
 
 ## Quick Start (One Command)
 
-### Windows:
-```bash
-run_app.bat
-```
 
-### Linux/Mac:
+### Mac:
 ```bash
 chmod +x run_app.sh
 ./run_app.sh
@@ -68,7 +64,7 @@ The script will:
 1. **Create a virtual environment**
 ```bash
 python -m venv venv
-source venv/bin/activate  # On Windows: venv\Scripts\activate
+source venv/bin/activate  
 ```
 
 2. **Install dependencies**
@@ -87,7 +83,6 @@ DJANGO_SECRET_KEY=your-secret-key-here
 
 4. **Ensure MongoDB is running**
 ```bash
-# Windows: MongoDB service should be running
 # Linux/Mac: sudo systemctl start mongod
 ```
 
@@ -107,9 +102,7 @@ python run_app.py
 Make sure MongoDB is running on your system:
 
 ```bash
-# On Windows (if installed as service, it should start automatically)
-# Or start manually:
-mongod
+
 
 # On Linux/Mac:
 sudo systemctl start mongod
@@ -182,7 +175,7 @@ cv_platform/
 │   ├── base.html         # Base template
 │   ├── accounts/         # Auth templates
 │   └── cv_extraction/    # App templates
-├── static/               # Static files (CSS, JS)
+├── static/               # Static files (CSS)
 ├── media/                # Uploaded files
 └── requirements.txt      # Python dependencies
 ```
@@ -256,6 +249,14 @@ After login, users are redirected based on their role:
 - Ensure `media/` directory exists and is writable
 - Check file size (max 10MB)
 - Verify file format (PDF or DOCX only)
+
+## Additional Resources
+
+- **Django Documentation**: https://docs.djangoproject.com/
+- **MongoDB Documentation**: https://docs.mongodb.com/
+- **Cohere API**: https://docs.cohere.com/
+- **Bootstrap Documentation**: https://getbootstrap.com/docs/
+- **Python Virtual Environments**: https://docs.python.org/3/tutorial/venv.html
 
 ## License
 

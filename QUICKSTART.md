@@ -8,12 +8,8 @@
 
 ## One-Command Startup
 
-### Windows:
-```bash
-run_app.bat
-```
 
-### Linux/Mac:
+## Mac:
 ```bash
 chmod +x run_app.sh
 ./run_app.sh
@@ -48,7 +44,6 @@ DJANGO_SECRET_KEY=your-secret-key-here
 
 3. **Start MongoDB** (if not running)
 ```bash
-# Windows: Check MongoDB service
 # Linux/Mac: sudo systemctl start mongod
 ```
 
@@ -91,10 +86,10 @@ The application supports **Arabic** and **English**:
 ### MongoDB Connection Error
 ```bash
 # Check if MongoDB is running
-mongosh  # or mongo
+mongo
 
 # Start MongoDB
-mongod  # or sudo systemctl start mongod
+sudo systemctl start mongod
 ```
 
 ### djongo Installation Issues
@@ -117,7 +112,6 @@ cv_platform/
 ├── static/            # Static files
 ├── media/             # Uploaded files
 ├── run_app.py         # Main startup script
-├── run_app.bat        # Windows startup
 └── run_app.sh         # Linux/Mac startup
 ```
 

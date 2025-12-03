@@ -4,28 +4,19 @@ Django settings for CV Platform project.
 import os
 from pathlib import Path
 from dotenv import load_dotenv
-import dj_database_url
-import environ
 
 load_dotenv()
-env = environ.Env()
-environ.Env.read_env()
 
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent
-
-
-
 
 # SECURITY WARNING: keep the secret key used in production secret!
 SECRET_KEY = os.getenv('DJANGO_SECRET_KEY', 'django-insecure-change-this-in-production')
 
 # SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = False
+DEBUG = True
 
-ALLOWED_HOSTS = ['cv-platform.onrender.com']
-
-CSRF_TRUSTED_ORIGINS = ['https://cv-platform.onrender.com']
+ALLOWED_HOSTS = ['*']
 
 # Application definition
 INSTALLED_APPS = [
@@ -38,16 +29,10 @@ INSTALLED_APPS = [
     'cv_platform',
     'accounts',
     'cv_extraction',
-    'cloudinary',
-    'cloudinary_storage',
 ]
-
-DEFAULT_FILE_STORAGE = 'cloudinary_storage.storage.MediaCloudinaryStorage'
-
 
 MIDDLEWARE = [
     'django.middleware.security.SecurityMiddleware',
-    'whitenoise.middleware.WhiteNoiseMiddleware',
     'django.contrib.sessions.middleware.SessionMiddleware',
     'django.middleware.locale.LocaleMiddleware',  # For i18n - MUST be after SessionMiddleware
     'cv_platform.middleware.LanguageDebugMiddleware',  # Custom middleware to ensure language is applied
@@ -83,17 +68,11 @@ WSGI_APPLICATION = 'cv_platform.wsgi.application'
 # Database Configuration
 # Django ORM uses SQLite for user authentication and admin
 # CV profiles are stored in MongoDB directly via pymongo (see mongodb_utils.py)
-"""""
 DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.sqlite3',
         'NAME': BASE_DIR.parent / 'db.sqlite3',  # Store in project root, not cv_platform folder
     }
-}"""
-
-
-DATABASES = {
-    'default': dj_database_url.parse(env('DATABASE_URL')),
 }
 
 # Custom User Model
@@ -140,15 +119,9 @@ STATIC_URL = '/static/'
 STATICFILES_DIRS = [BASE_DIR / 'static']
 STATIC_ROOT = BASE_DIR / 'staticfiles'
 
-STATICFILES_STORAGE = 'whitenoise.storage.CompressedManifestStaticFilesStorage'
-
 # Media files (Uploaded files)
-if os.getenv("CLOUDINARY_URL"):
-    DEFAULT_FILE_STORAGE = 'cloudinary_storage.storage.MediaCloudinaryStorage'
-else:
-    DEFAULT_FILE_STORAGE = 'django.core.files.storage.FileSystemStorage'
-    MEDIA_URL = '/media/'
-    MEDIA_ROOT = BASE_DIR / 'media'
+MEDIA_URL = '/media/'
+MEDIA_ROOT = BASE_DIR / 'media'
 
 # Default primary key field type
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
@@ -159,10 +132,8 @@ LOGIN_REDIRECT_URL = '/'  # Will be overridden by custom login view
 LOGOUT_REDIRECT_URL = '/accounts/login/'  # Redirect to login page after logout
 
 # MongoDB Configuration
-#MONGODB_URI = os.getenv('MONGODB_URI', 'mongodb://localhost:27017/')
-#MONGODB_DB_NAME = os.getenv('MONGODB_DB_NAME', 'cv_platform')
+MONGODB_URI = os.getenv('MONGODB_URI', 'mongodb+srv://user-12:aMC1i7aeYy2lcyvd@cluster0.mlhg3oy.mongodb.net/')
+MONGODB_DB_NAME = os.getenv('MONGODB_DB_NAME', 'cv_platform')
 
 # Cohere API Configuration
 COHERE_API_KEY = os.getenv('COHERE_API_KEY', '')
-
-
